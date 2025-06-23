@@ -10,72 +10,82 @@ export interface Metadata {
   orderNumber: string;
   customerName: string;
   customerEmail: string;
+  customerPhone?: string;
   clerkUserId?: string;
   address?: Address | null;
 }
 
-export interface GroupedCartItems {
+type GroupedCartItems = {
   product: CartItem["product"];
   quantity: number;
-}
+};
 
 export async function createCheckoutSession(
   items: GroupedCartItems[],
   metadata: Metadata
 ) {
   try {
-    // Retrieve existing customer or create a new one
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    if (!baseUrl) {
+      throw new Error("NEXT_PUBLIC_BASE_URL is not defined in environment variables.");
+    }
+
+    // Find or create customer by email
+    let customerId = "";
     const customers = await stripe.customers.list({
       email: metadata.customerEmail,
       limit: 1,
     });
-    const customerId = customers?.data?.length > 0 ? customers.data[0].id : "";
+
+    if (customers.data.length > 0) {
+      customerId = customers.data[0].id;
+    } else {
+      const customer = await stripe.customers.create({
+        email: metadata.customerEmail,
+        name: metadata.customerName,
+        phone: metadata.customerPhone,
+      });
+      customerId = customer.id;
+    }
 
     const sessionPayload: Stripe.Checkout.SessionCreateParams = {
+      customer: customerId,
       metadata: {
         orderNumber: metadata.orderNumber,
         customerName: metadata.customerName,
         customerEmail: metadata.customerEmail,
-        clerkUserId: metadata.clerkUserId!,
-        address: JSON.stringify(metadata.address),
+        customerPhone: metadata.customerPhone ?? "",
+        clerkUserId: metadata.clerkUserId ?? "",
+        address: JSON.stringify(metadata.address ?? {}),
       },
       mode: "payment",
+      payment_method_types: ["card", "upi"],
       allow_promotion_codes: true,
-      payment_method_types: ["card"],
       invoice_creation: {
         enabled: true,
       },
-      success_url: `${
-        process.env.NEXT_PUBLIC_BASE_URL
-      }/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cart`,
-      line_items: items?.map((item) => ({
+      success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
+      cancel_url: `${baseUrl}/cart`,
+      line_items: items.map((item) => ({
         price_data: {
-          currency: "USD",
-          unit_amount: Math.round(item?.product?.price! * 100),
+          currency: "inr",
+          unit_amount: Math.round(item.product.price * 100), // Assuming price is in INR
           product_data: {
-            name: item?.product?.name || "Unknown Product",
-            description: item?.product?.description,
-            metadata: { id: item?.product?._id },
-            images:
-              item?.product?.images && item?.product?.images?.length > 0
-                ? [urlFor(item?.product?.images[0]).url()]
-                : undefined,
+            name: item.product.name,
+            images: item.product.image ? [urlFor(item.product.image).url()] : [],
+            description: item.product.description || "",
           },
         },
-        quantity: item?.quantity,
+        quantity: item.quantity,
       })),
     };
-    if (customerId) {
-      sessionPayload.customer = customerId;
-    } else {
-      sessionPayload.customer_email = metadata.customerEmail;
-    }
-
     const session = await stripe.checkout.sessions.create(sessionPayload);
-    return session.url;
-  } catch (error) {
-    console.error("Error creating Checkout Session", error);
-    throw error;
+    return session;
+  } catch (err) {
+    console.error("Failed to create checkout session:", err);
+    throw new Error("Unable to create checkout session. Please try again.");
   }
 }
+
+
+    
