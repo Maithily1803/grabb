@@ -5,7 +5,6 @@ import LatestBlog from "@/components/LatestBlog";
 import ProductGrid from "@/components/ProductGrid";
 import ShopByBrands from "@/components/ShopByBrands";
 import { getCategories } from "@/sanity/queries";
-
 import React from "react";
 
 const Home = async () => {

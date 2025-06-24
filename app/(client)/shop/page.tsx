@@ -5,8 +5,9 @@ import React from "react";
 const ShopPage = async () => {
   const categories = await getCategories();
   const brands = await getAllBrands();
+
   return (
-    <div className="bg-white">
+    <div className="bg-white py-10">
       <Shop categories={categories} brands={brands} />
     </div>
   );

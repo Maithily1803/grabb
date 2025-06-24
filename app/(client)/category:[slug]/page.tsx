@@ -4,20 +4,23 @@ import Title from "@/components/Title";
 import { getCategories } from "@/sanity/queries";
 import React from "react";
 
-const CategoryPage = async ({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) => {
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+const CategoryPage = async ({ params }: PageProps) => {
   const categories = await getCategories();
-  const { slug } = await params;
+  const { slug } = params;
+
   return (
     <div className="py-10">
       <Container>
         <Title>
           Products by Category:{" "}
           <span className="font-bold text-green-600 capitalize tracking-wide">
-            {slug && slug}
+            {slug}
           </span>
         </Title>
         <CategoryProducts categories={categories} slug={slug} />
