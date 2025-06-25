@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import Title from "@/components/Title";
-import { urlFor } from "@/sanity/lib/image";
+import { urlFor } from "@/sanity/lib/images";
 import { getAllBlogs } from "@/sanity/queries";
 import dayjs from "dayjs";
 import { Calendar } from "lucide-react";
