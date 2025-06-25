@@ -1,5 +1,7 @@
 import { Product } from "@/sanity.types";
-import { urlFor } from "@/sanity/lib/image";
+import { urlFor } from "../sanity/lib/image"
+// ✅ if you're in /components
+
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";

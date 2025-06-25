@@ -1,0 +1,874 @@
+[
+  {
+    "_type": "product",
+    "_id": "2b38894c-0376-4ab7-a282-e19462a570e4",
+    "name": "Women Dresses - Zara",
+    "slug": {
+      "_type": "slug",
+      "current": "women-dresses---zara"
+    },
+    "brand": "HRX",
+    "category": "Women",
+    "subcategory": "Dresses",
+    "gender": "Women",
+    "price": 558,
+    "sizes": [
+      "2",
+      "3",
+      "4"
+    ],
+    "colors": [
+      "Black",
+      "Red",
+      "Yellow"
+    ],
+    "description": "A stylish and comfortable dresses from Women collection.",
+    "material": "Rayon",
+    "fit": "Relaxed",
+    "rating": 4.1,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "4efd60b7-6f0c-4d9e-8723-07a6fc5f8b12",
+    "name": "Men Bottomwear - Biba",
+    "slug": {
+      "_type": "slug",
+      "current": "men-bottomwear---biba"
+    },
+    "brand": "H&M",
+    "category": "Men",
+    "subcategory": "Bottomwear",
+    "gender": "Men",
+    "price": 805,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Yellow",
+      "Green"
+    ],
+    "description": "A stylish and comfortable bottomwear from Men collection.",
+    "material": "Polyester",
+    "fit": "Flared",
+    "rating": 3.5,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "4b413d06-eec4-4151-86f5-458179527467",
+    "name": "Accessories Jewelry - Levi's",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-jewelry---levi's"
+    },
+    "brand": "Levi's",
+    "category": "Accessories",
+    "subcategory": "Jewelry",
+    "gender": "Unisex",
+    "price": 2270,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "White",
+      "Red",
+      "Green"
+    ],
+    "description": "A stylish and comfortable jewelry from Accessories collection.",
+    "material": "Denim",
+    "fit": "Regular",
+    "rating": 4.0,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "c5505c20-8a37-486f-8de6-b07230b63a61",
+    "name": "Men Topwear - Nike",
+    "slug": {
+      "_type": "slug",
+      "current": "men-topwear---nike"
+    },
+    "brand": "Nike",
+    "category": "Men",
+    "subcategory": "Topwear",
+    "gender": "Men",
+    "price": 1463,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Blue",
+      "Red"
+    ],
+    "description": "A stylish and comfortable topwear from Men collection.",
+    "material": "Rayon",
+    "fit": "Relaxed",
+    "rating": 4.3,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "03762fbf-59e7-4398-a34d-0913c5bd4573",
+    "name": "Men Topwear - Allen Solly",
+    "slug": {
+      "_type": "slug",
+      "current": "men-topwear---allen-solly"
+    },
+    "brand": "Levi's",
+    "category": "Men",
+    "subcategory": "Topwear",
+    "gender": "Men",
+    "price": 551,
+    "sizes": [
+      "2",
+      "3",
+      "4"
+    ],
+    "colors": [
+      "Red",
+      "Green"
+    ],
+    "description": "A stylish and comfortable topwear from Men collection.",
+    "material": "Leather",
+    "fit": "Relaxed",
+    "rating": 4.0,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "3874ce74-bf80-4383-971e-e8be95db48d1",
+    "name": "Women Dresses - HRX",
+    "slug": {
+      "_type": "slug",
+      "current": "women-dresses---hrx"
+    },
+    "brand": "Puma",
+    "category": "Women",
+    "subcategory": "Dresses",
+    "gender": "Women",
+    "price": 2757,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "description": "A stylish and comfortable dresses from Women collection.",
+    "material": "Leather",
+    "fit": "Flared",
+    "rating": 4.4,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "10cfaf20-ac50-43b4-b805-737e87a574fc",
+    "name": "Women Footwear - HRX",
+    "slug": {
+      "_type": "slug",
+      "current": "women-footwear---hrx"
+    },
+    "brand": "Nike",
+    "category": "Women",
+    "subcategory": "Footwear",
+    "gender": "Women",
+    "price": 2333,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Blue",
+      "White"
+    ],
+    "description": "A stylish and comfortable footwear from Women collection.",
+    "material": "Polyester",
+    "fit": "Relaxed",
+    "rating": 4.7,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "d2303c09-259c-48f2-9d44-75003ba2b5e1",
+    "name": "Kids Topwear - HRX",
+    "slug": {
+      "_type": "slug",
+      "current": "kids-topwear---hrx"
+    },
+    "brand": "Levi's",
+    "category": "Kids",
+    "subcategory": "Topwear",
+    "gender": "Kids",
+    "price": 1682,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Green"
+    ],
+    "description": "A stylish and comfortable topwear from Kids collection.",
+    "material": "Rayon",
+    "fit": "Regular",
+    "rating": 4.2,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "4b157a00-2d8e-4088-a848-a303d5c46d18",
+    "name": "Women Footwear - Biba",
+    "slug": {
+      "_type": "slug",
+      "current": "women-footwear---biba"
+    },
+    "brand": "Allen Solly",
+    "category": "Women",
+    "subcategory": "Footwear",
+    "gender": "Women",
+    "price": 2659,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "description": "A stylish and comfortable footwear from Women collection.",
+    "material": "Cotton",
+    "fit": "Slim",
+    "rating": 5.0,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "1e355854-84ae-4163-8622-6282723dac9d",
+    "name": "Men Bottomwear - Nike",
+    "slug": {
+      "_type": "slug",
+      "current": "men-bottomwear---nike"
+    },
+    "brand": "Allen Solly",
+    "category": "Men",
+    "subcategory": "Bottomwear",
+    "gender": "Men",
+    "price": 2358,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      "Blue",
+      "Black"
+    ],
+    "description": "A stylish and comfortable bottomwear from Men collection.",
+    "material": "Polyester",
+    "fit": "Slim",
+    "rating": 4.8,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "4167eac6-5ff2-4914-8d45-aaef7a8b23b9",
+    "name": "Kids Footwear - Nike",
+    "slug": {
+      "_type": "slug",
+      "current": "kids-footwear---nike"
+    },
+    "brand": "Puma",
+    "category": "Kids",
+    "subcategory": "Footwear",
+    "gender": "Kids",
+    "price": 2151,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "White"
+    ],
+    "description": "A stylish and comfortable footwear from Kids collection.",
+    "material": "Rayon",
+    "fit": "Slim",
+    "rating": 3.7,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "d1b8d970-c728-4205-8dd3-e15e1defb799",
+    "name": "Women Topwear - H&M",
+    "slug": {
+      "_type": "slug",
+      "current": "women-topwear---h&m"
+    },
+    "brand": "Zara",
+    "category": "Women",
+    "subcategory": "Topwear",
+    "gender": "Women",
+    "price": 2392,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "Blue"
+    ],
+    "description": "A stylish and comfortable topwear from Women collection.",
+    "material": "Rayon",
+    "fit": "Flared",
+    "rating": 3.7,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "b75a32b0-40ae-43a8-9c6d-7afa28b32667",
+    "name": "Accessories Jewelry - Biba",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-jewelry---biba"
+    },
+    "brand": "Allen Solly",
+    "category": "Accessories",
+    "subcategory": "Jewelry",
+    "gender": "Unisex",
+    "price": 605,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "White",
+      "Red"
+    ],
+    "description": "A stylish and comfortable jewelry from Accessories collection.",
+    "material": "Denim",
+    "fit": "Flared",
+    "rating": 3.9,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "25eafb4d-0c3f-478f-a0c2-a0b67233b4ca",
+    "name": "Men Footwear - Zara",
+    "slug": {
+      "_type": "slug",
+      "current": "men-footwear---zara"
+    },
+    "brand": "HRX",
+    "category": "Men",
+    "subcategory": "Footwear",
+    "gender": "Men",
+    "price": 2648,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "Red"
+    ],
+    "description": "A stylish and comfortable footwear from Men collection.",
+    "material": "Denim",
+    "fit": "Regular",
+    "rating": 4.8,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "39d0db42-cba4-4594-a412-68138b9dd460",
+    "name": "Accessories Jewelry - Nike",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-jewelry---nike"
+    },
+    "brand": "HRX",
+    "category": "Accessories",
+    "subcategory": "Jewelry",
+    "gender": "Unisex",
+    "price": 2383,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      "Green"
+    ],
+    "description": "A stylish and comfortable jewelry from Accessories collection.",
+    "material": "Rayon",
+    "fit": "Flared",
+    "rating": 4.4,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "7280d5b2-0b2d-43ec-9a41-dba424e18715",
+    "name": "Women Footwear - Allen Solly",
+    "slug": {
+      "_type": "slug",
+      "current": "women-footwear---allen-solly"
+    },
+    "brand": "H&M",
+    "category": "Women",
+    "subcategory": "Footwear",
+    "gender": "Women",
+    "price": 2234,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "Green",
+      "Black"
+    ],
+    "description": "A stylish and comfortable footwear from Women collection.",
+    "material": "Polyester",
+    "fit": "Slim",
+    "rating": 4.0,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "18c81157-5c7c-46e1-a26b-58a9f57e1e9d",
+    "name": "Kids Footwear - HRX",
+    "slug": {
+      "_type": "slug",
+      "current": "kids-footwear---hrx"
+    },
+    "brand": "Puma",
+    "category": "Kids",
+    "subcategory": "Footwear",
+    "gender": "Kids",
+    "price": 1316,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      "Yellow"
+    ],
+    "description": "A stylish and comfortable footwear from Kids collection.",
+    "material": "Leather",
+    "fit": "Regular",
+    "rating": 4.3,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "d3777d95-2c2c-42d6-9fab-181840133ec9",
+    "name": "Kids Topwear - Biba",
+    "slug": {
+      "_type": "slug",
+      "current": "kids-topwear---biba"
+    },
+    "brand": "HRX",
+    "category": "Kids",
+    "subcategory": "Topwear",
+    "gender": "Kids",
+    "price": 955,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "Yellow",
+      "Black",
+      "Blue"
+    ],
+    "description": "A stylish and comfortable topwear from Kids collection.",
+    "material": "Denim",
+    "fit": "Regular",
+    "rating": 4.9,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "16c5ca19-dc9c-45b7-89d3-57760ec5ab31",
+    "name": "Accessories Bags - Puma",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-bags---puma"
+    },
+    "brand": "HRX",
+    "category": "Accessories",
+    "subcategory": "Bags",
+    "gender": "Unisex",
+    "price": 2713,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "White"
+    ],
+    "description": "A stylish and comfortable bags from Accessories collection.",
+    "material": "Cotton",
+    "fit": "Regular",
+    "rating": 3.6,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "2291cd6e-8571-4e3a-9439-03e29e862571",
+    "name": "Women Footwear - Puma",
+    "slug": {
+      "_type": "slug",
+      "current": "women-footwear---puma"
+    },
+    "brand": "Zara",
+    "category": "Women",
+    "subcategory": "Footwear",
+    "gender": "Women",
+    "price": 1793,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      "Green",
+      "Black"
+    ],
+    "description": "A stylish and comfortable footwear from Women collection.",
+    "material": "Polyester",
+    "fit": "Flared",
+    "rating": 4.9,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "d876b185-82e0-4248-a594-69abfddbe9bd",
+    "name": "Accessories Jewelry - Puma",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-jewelry---puma"
+    },
+    "brand": "Nike",
+    "category": "Accessories",
+    "subcategory": "Jewelry",
+    "gender": "Unisex",
+    "price": 1596,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      "Blue",
+      "Green"
+    ],
+    "description": "A stylish and comfortable jewelry from Accessories collection.",
+    "material": "Polyester",
+    "fit": "Regular",
+    "rating": 4.8,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "4ff45566-ff36-4650-9040-8573b1dceee8",
+    "name": "Accessories Watches - Levi's",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-watches---levi's"
+    },
+    "brand": "HRX",
+    "category": "Accessories",
+    "subcategory": "Watches",
+    "gender": "Unisex",
+    "price": 1713,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "White",
+      "Red"
+    ],
+    "description": "A stylish and comfortable watches from Accessories collection.",
+    "material": "Leather",
+    "fit": "Slim",
+    "rating": 4.6,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "b824b2d2-d087-4f91-ba1d-a1ddd92e5553",
+    "name": "Women Topwear - Levi's",
+    "slug": {
+      "_type": "slug",
+      "current": "women-topwear---levi's"
+    },
+    "brand": "Puma",
+    "category": "Women",
+    "subcategory": "Topwear",
+    "gender": "Women",
+    "price": 1836,
+    "sizes": [
+      "2",
+      "3",
+      "4"
+    ],
+    "colors": [
+      "White",
+      "Blue"
+    ],
+    "description": "A stylish and comfortable topwear from Women collection.",
+    "material": "Cotton",
+    "fit": "Relaxed",
+    "rating": 3.9,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "81d23d54-454b-4a64-9fc4-49388d012279",
+    "name": "Kids Footwear - H&M",
+    "slug": {
+      "_type": "slug",
+      "current": "kids-footwear---h&m"
+    },
+    "brand": "Levi's",
+    "category": "Kids",
+    "subcategory": "Footwear",
+    "gender": "Kids",
+    "price": 1629,
+    "sizes": [
+      "2",
+      "3",
+      "4"
+    ],
+    "colors": [
+      "White",
+      "Red"
+    ],
+    "description": "A stylish and comfortable footwear from Kids collection.",
+    "material": "Polyester",
+    "fit": "Flared",
+    "rating": 3.8,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "6e0923ba-f3a8-4889-90ca-241c19ee9ed1",
+    "name": "Accessories Watches - Biba",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-watches---biba"
+    },
+    "brand": "Levi's",
+    "category": "Accessories",
+    "subcategory": "Watches",
+    "gender": "Unisex",
+    "price": 2459,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "Yellow"
+    ],
+    "description": "A stylish and comfortable watches from Accessories collection.",
+    "material": "Polyester",
+    "fit": "Flared",
+    "rating": 4.6,
+    "isFeatured": false,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "6aec0ef7-ab2c-4b9b-b878-cf3139b1be12",
+    "name": "Accessories Bags - Allen Solly",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-bags---allen-solly"
+    },
+    "brand": "HRX",
+    "category": "Accessories",
+    "subcategory": "Bags",
+    "gender": "Unisex",
+    "price": 1842,
+    "sizes": [
+      "2",
+      "3",
+      "4"
+    ],
+    "colors": [
+      "Red"
+    ],
+    "description": "A stylish and comfortable bags from Accessories collection.",
+    "material": "Polyester",
+    "fit": "Regular",
+    "rating": 4.5,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "06a7bc37-b151-414c-9744-1440c06165e6",
+    "name": "Kids Topwear - Zara",
+    "slug": {
+      "_type": "slug",
+      "current": "kids-topwear---zara"
+    },
+    "brand": "Puma",
+    "category": "Kids",
+    "subcategory": "Topwear",
+    "gender": "Kids",
+    "price": 1879,
+    "sizes": [
+      "2",
+      "3",
+      "4"
+    ],
+    "colors": [
+      "Black",
+      "Blue",
+      "Green"
+    ],
+    "description": "A stylish and comfortable topwear from Kids collection.",
+    "material": "Polyester",
+    "fit": "Flared",
+    "rating": 4.6,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "4275e64a-69cb-45fa-9f84-bdc0275ae632",
+    "name": "Kids Footwear - H&M",
+    "slug": {
+      "_type": "slug",
+      "current": "kids-footwear---h&m"
+    },
+    "brand": "Biba",
+    "category": "Kids",
+    "subcategory": "Footwear",
+    "gender": "Kids",
+    "price": 2673,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Red"
+    ],
+    "description": "A stylish and comfortable footwear from Kids collection.",
+    "material": "Leather",
+    "fit": "Relaxed",
+    "rating": 3.9,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "1af34cf3-bea2-4e28-9bff-6a657f55bb07",
+    "name": "Men Bottomwear - Biba",
+    "slug": {
+      "_type": "slug",
+      "current": "men-bottomwear---biba"
+    },
+    "brand": "H&M",
+    "category": "Men",
+    "subcategory": "Bottomwear",
+    "gender": "Men",
+    "price": 1627,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "White",
+      "Black"
+    ],
+    "description": "A stylish and comfortable bottomwear from Men collection.",
+    "material": "Rayon",
+    "fit": "Flared",
+    "rating": 3.8,
+    "isFeatured": true,
+    "images": []
+  },
+  {
+    "_type": "product",
+    "_id": "2669a3ad-e055-4e18-ba7b-8aa19b80bcc4",
+    "name": "Accessories Watches - Levi's",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-watches---levi's"
+    },
+    "brand": "H&M",
+    "category": "Accessories",
+    "subcategory": "Watches",
+    "gender": "Unisex",
+    "price": 2572,
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34"
+    ],
+    "colors": [
+      "Red",
+      "Green"
+    ],
+    "description": "A stylish and comfortable watches from Accessories collection.",
+    "material": "Denim",
+    "fit": "Relaxed",
+    "rating": 4.2,
+    "isFeatured": true,
+    "images": []
+  }
+]
+
