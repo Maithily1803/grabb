@@ -1,5 +1,5 @@
-import { BRANDS_QUERYResult } from "@/sanity.types";
 import React from "react";
+import { BRANDS_QUERYResult } from "@/sanity.types";
 import Title from "../Title";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
@@ -12,32 +12,41 @@ interface Props {
 
 const BrandList = ({ brands, selectedBrand, setSelectedBrand }: Props) => {
   return (
-    <div className="w-full bg-white p-5">
-      <Title className="text-base font-black">Brands</Title>
-      <RadioGroup value={selectedBrand || ""} className="mt-2 space-y-1">
-        {brands?.map((brand) => (
-          <div
-            key={brand?._id}
-            onClick={() => setSelectedBrand(brand?.slug?.current as string)}
-            className="flex items-center space-x-2 hover:cursor-pointer"
-          >
-            <RadioGroupItem
-              value={brand?.slug?.current as string}
-              id={brand?.slug?.current}
-              className="rounded-sm"
-            />
-            <Label
-              htmlFor={brand?.slug?.current}
-              className={`${selectedBrand === brand?.slug?.current ? "font-semibold text-shop_dark_green" : "font-normal"}`}
+    <div className="w-full bg-white p-5 rounded-lg shadow-sm">
+      <Title className="text-base font-black mb-2">Brands</Title>
+
+      <RadioGroup value={selectedBrand || ""} className="space-y-1">
+        {brands?.map((brand) => {
+          const slug = brand?.slug?.current ?? brand?._id;
+          return (
+            <div
+              key={brand._id}
+              onClick={() => setSelectedBrand(slug)}
+              className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 px-2 py-1 rounded-md"
             >
-              {brand?.title}
-            </Label>
-          </div>
-        ))}
+              <RadioGroupItem
+                value={slug}
+                id={slug}
+                className="rounded-sm"
+              />
+              <Label
+                htmlFor={slug}
+                className={`${
+                  selectedBrand === slug
+                    ? "font-semibold text-shop_dark_green"
+                    : "font-normal"
+                }`}
+              >
+                {brand.title}
+              </Label>
+            </div>
+          );
+        })}
+
         {selectedBrand && (
           <button
             onClick={() => setSelectedBrand(null)}
-            className="text-sm font-medium mt-2 underline underline-offset-2 decoration-[1px] hover:text-shop_dark_green hoverEffect text-left"
+            className="text-sm mt-3 underline text-left text-shop_dark_green hover:text-shop_green transition"
           >
             Reset selection
           </button>

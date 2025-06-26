@@ -1,36 +1,29 @@
 import React from "react";
-import Image from "next/image";
-import banner_1 from "@/images/banner_1.jpg"; // default import for jpg
 import { Title } from "./ui/text";
 import Link from "next/link";
+import Image from "next/image";
+import { banner_1 } from "@/images";
 
 const HomeBanner = () => {
   return (
     <div className="py-16 md:py-0 bg-shop_light_pink rounded-lg px-10 lg:px-24 flex items-center justify-between">
-      {/* Left side content */}
-      <div>
-        <Title className="text-4xl md:text-5xl font-bold mb-4">
-          Welcome to Our Store!
+      <div className="space-y-5">
+        <Title>
+          Grab Upto 50% off on <br />
+          Selected headphone
         </Title>
-        <p className="mb-6 text-lg text-gray-700">
-          Discover great deals on amazing products.
-        </p>
         <Link
-          href="/shop"
-          className="inline-block bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition"
+          href={"/shop"}
+          className="bg-shop_dark_green/90 text-white/90 px-5 py-2 rounded-md text-sm font-semibold hover:text-white hover:bg-shop_dark_green hoverEffect"
         >
-          Shop Now
+          Buy Now
         </Link>
       </div>
-
-      {/* Right side image */}
-      <div className="hidden md:block">
+      <div>
         <Image
           src={banner_1}
-          alt="Home Banner"
-          width={500}
-          height={300}
-          className="rounded-lg shadow-lg"
+          alt="banner_1"
+          className="hidden md:inline-flex w-96"
         />
       </div>
     </div>
