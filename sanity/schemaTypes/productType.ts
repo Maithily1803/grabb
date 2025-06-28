@@ -1,94 +1,117 @@
-import { defineField, defineType } from 'sanity'
+import { TrolleyIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
 
 export const productType = defineType({
-  name: 'product',
-  title: 'Product',
-  type: 'document',
+  name: "product",
+  title: "Products",
+  type: "document",
+  icon: TrolleyIcon,
   fields: [
-    defineField({ name: 'name', title: 'Product Name', type: 'string' }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'name' },
+      name: "name",
+      title: "Product Name",
+      type: "string",
+      validation: (Rule) => Rule.required(),
     }),
-    defineField({ name: 'brand', title: 'Brand', type: 'string' }),
     defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       options: {
-        list: ['Men', 'Women', 'Kids', 'Accessories'],
+        source: "name",
+        maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'subcategory',
-      title: 'Subcategory',
-      type: 'string',
+      name: "images",
+      title: "Product Images",
+      type: "array",
+      of: [{ type: "image", options: { hotspot: true } }],
+    }),
+    defineField({
+      name: "description",
+      title: "Description",
+      type: "string",
+    }),
+    defineField({
+      name: "price",
+      title: "Price",
+      type: "number",
+      validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
+      name: "discount",
+      title: "Discount",
+      type: "number",
+      validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
+      name: "categories",
+      title: "Categories",
+      type: "array",
+      of: [{ type: "reference", to: { type: "category" } }],
+    }),
+    defineField({
+      name: "stock",
+      title: "Stock",
+      type: "number",
+      validation: (Rule) => Rule.min(0),
+    }),
+    defineField({
+      name: "brand",
+      title: "Brand",
+      type: "reference",
+      to: { type: "brand" },
+    }),
+
+    defineField({
+      name: "status",
+      title: "Product Status",
+      type: "string",
       options: {
         list: [
-          'Topwear',
-          'Bottomwear',
-          'Footwear',
-          'Bags',
-          'Caps',
-          'Watches',
+          { title: "New", value: "new" },
+          { title: "Hot", value: "hot" },
+          { title: "Sale", value: "sale" },
         ],
       },
-      validation: (Rule) =>
-        Rule.custom((sub: unknown, context: any) => {
-          if (typeof sub !== 'string') return true
-
-          const category = context?.parent?.category as string | undefined
-
-          const map: Record<string, string[]> = {
-            Men: ['Topwear', 'Bottomwear', 'Footwear'],
-            Women: ['Topwear', 'Bottomwear', 'Footwear', 'Bags'],
-            Kids: ['Topwear', 'Footwear', 'Caps'],
-            Accessories: ['Bags', 'Caps', 'Watches'],
-          }
-
-          if (!category || !sub) return true
-
-          return map[category]?.includes(sub)
-            ? true
-            : `Invalid subcategory "${sub}" for category "${category}"`
-        }),
-    }),
-    defineField({ name: 'gender', title: 'Gender', type: 'string' }),
-    defineField({ name: 'price', title: 'Price (INR)', type: 'number' }),
-    defineField({
-      name: 'sizes',
-      title: 'Available Sizes',
-      type: 'array',
-      of: [{ type: 'string' }],
     }),
     defineField({
-      name: 'colors',
-      title: 'Available Colors',
-      type: 'array',
-      of: [{ type: 'string' }],
-    }),
-    defineField({ name: 'material', title: 'Material', type: 'string' }),
-    defineField({ name: 'fit', title: 'Fit Type', type: 'string' }),
-    defineField({ name: 'description', title: 'Description', type: 'text' }),
-    defineField({
-      name: 'rating',
-      title: 'Rating',
-      type: 'number',
-      validation: (Rule) => Rule.min(0).max(5),
+      name: "variant",
+      title: "Product Type",
+      type: "string",
+      options: {
+        list: [
+          { title: "Gadget", value: "gadget" },
+          { title: "Appliances", value: "appliances" },
+          { title: "Refrigerators", value: "refrigerators" },
+          { title: "Others", value: "others" },
+        ],
+      },
     }),
     defineField({
-      name: 'isFeatured',
-      title: 'Featured Product',
-      type: 'boolean',
-    }),
-    defineField({
-      name: 'images',
-      title: 'Product Images',
-      type: 'array',
-      of: [{ type: 'image', options: { hotspot: true } }],
+      name: "isFeatured",
+      title: "Featured Product",
+      type: "boolean",
+      description: "Toggle to Featured on or off",
+      initialValue: false,
     }),
   ],
-})
+  preview: {
+    select: {
+      title: "name",
+      media: "images",
+      subtitle: "price",
+    },
+    prepare(selection) {
+      const { title, subtitle, media } = selection;
+      const image = media && media[0];
+      return {
+        title: title,
+        subtitle: `$${subtitle}`,
+        media: image,
+      };
+    },
+  },
+});
