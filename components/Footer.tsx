@@ -4,7 +4,7 @@ import FooterTop from "./FooterTop";
 import Logo from "./Logo";
 import SocialMedia from "./SocialMedia";
 import { SubText, SubTitle } from "./ui/text";
-import { categoriesData, quickLinksData } from "@/constants/data";
+import { categoriesData, quickLinksData } from "@/constant/data";
 import Link from "next/link";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -18,8 +18,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Logo />
             <SubText>
-              Discover curated furniture collections at Shopcartyt, blending
-              style and comfort to elevate your living spaces.
+              GRABB your fit. GRABB your moment. Because fashion isn't just worn — it's owned. 
             </SubText>
             <SocialMedia
               className="text-darkColor/60"

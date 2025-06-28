@@ -3,7 +3,7 @@ export const headerData = [
     { title: "Shop", href: "/shop" },
     { title: "Blog", href: "/blog" },
     { title: "Hot Deal", href: "/deal" },
-    { title: "Contact", href: "/contact" },
+    //{ title: "Contact", href: "/contact" },
   ];
   export const quickLinksData = [
     { title: "About us", href: "/about" },
@@ -14,17 +14,18 @@ export const headerData = [
     { title: "Help", href: "/help" },
   ];
   export const categoriesData = [
-    { title: "Mobiles", href: "mobiles" },
-    { title: "Appliances", href: "appliances" },
-    { title: "Smartphones", href: "smartphones" },
-    { title: "Air Conditioners", href: "air-conditioners" },
-    { title: "Washing Machine", href: "washing-machine" },
-    { title: "Kitchen Appliances", href: "kitchen-appliances" },
-    { title: "gadget accessories", href: "gadget-accessories" },
-  ];
-  export const productType = [
-    { title: "Gadget", value: "gadget" },
-    { title: "Appliances", value: "appliances" },
-    { title: "Refrigerators", value: "refrigerators" },
-    { title: "Others", value: "others" },
-  ];
+  { title: "Men", href: "men" },
+  { title: "Women", href: "women" },
+  { title: "Kids", href: "kids" },
+  { title: "Accessories", href: "accessories" },
+];
+
+export const productType = [
+  { title: "T-Shirts", value: "tshirts" },
+  { title: "Shirts", value: "shirts" },
+  { title: "Dresses", value: "dresses" },
+  { title: "Shoes", value: "shoes" },
+  { title: "Bags", value: "bags" },
+  { title: "Watches", value: "watches" },
+  { title: "Others", value: "others" },
+];

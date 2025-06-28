@@ -1,3 +1,3 @@
-import banner_1 from "./banner_1.jpg";
+import banner_1 from "./banner/banner_1.jpg";
 
 export { banner_1 };

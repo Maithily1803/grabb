@@ -7,9 +7,14 @@ export default {
     './components/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        shop_dark_green: "#014421", // 🟩 use your desired hex value
+        shop_lightpink: "#fdf2f8",   // for bg-shop-lightpink if needed
+      },
+    },
   },
-  plugins: [plugin()],
-}
+  plugins: [],
+};
 
 
