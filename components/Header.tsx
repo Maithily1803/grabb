@@ -1,6 +1,8 @@
+
+
 import { getMyOrders } from "@/sanity/queries";
 import { ClerkLoaded, SignedIn, UserButton, SignIn } from "@clerk/clerk-react";
-import { currentUser, auth } from "@clerk/nextjs/dist/types/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { Link, Logs } from "lucide-react";
 import CartIcon from "./CartIcon";
 import Container from "./Container";

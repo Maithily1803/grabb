@@ -1,5 +1,5 @@
-import { TrolleyIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { TrolleyIcon } from "@sanity/icons";
 
 export const productType = defineType({
   name: "product",
@@ -13,6 +13,7 @@ export const productType = defineType({
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "slug",
       title: "Slug",
@@ -23,41 +24,53 @@ export const productType = defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "images",
       title: "Product Images",
       type: "array",
       of: [{ type: "image", options: { hotspot: true } }],
+      validation: (Rule) => Rule.required().min(1),
     }),
+
     defineField({
       name: "description",
       title: "Description",
-      type: "string",
+      type: "text",
+      rows: 4,
+      validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "price",
-      title: "Price",
+      title: "Price (INR)",
       type: "number",
       validation: (Rule) => Rule.required().min(0),
     }),
+
     defineField({
       name: "discount",
-      title: "Discount",
+      title: "Discount (%)",
       type: "number",
-      validation: (Rule) => Rule.required().min(0),
+      initialValue: 0,
+      validation: (Rule) => Rule.min(0),
     }),
+
     defineField({
       name: "categories",
       title: "Categories",
       type: "array",
       of: [{ type: "reference", to: { type: "category" } }],
+      validation: (Rule) => Rule.required().min(1),
     }),
+
     defineField({
       name: "stock",
-      title: "Stock",
+      title: "Available Stock",
       type: "number",
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) => Rule.required().min(0),
     }),
+
     defineField({
       name: "brand",
       title: "Brand",
@@ -75,42 +88,47 @@ export const productType = defineType({
           { title: "Hot", value: "hot" },
           { title: "Sale", value: "sale" },
         ],
+        layout: "dropdown",
       },
     }),
+
     defineField({
       name: "variant",
       title: "Product Type",
       type: "string",
       options: {
         list: [
-          { title: "Gadget", value: "gadget" },
-          { title: "Appliances", value: "appliances" },
-          { title: "Refrigerators", value: "refrigerators" },
+          { title: "Topwear", value: "topwear" },
+          { title: "Bottomwear", value: "bottomwear" },
+          { title: "Footwear", value: "footwear" },
+          { title: "Accessories", value: "accessories" },
           { title: "Others", value: "others" },
         ],
+        layout: "dropdown",
       },
+      validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "isFeatured",
       title: "Featured Product",
       type: "boolean",
-      description: "Toggle to Featured on or off",
+      description: "Mark as featured to show on homepage or deals section",
       initialValue: false,
     }),
   ],
+
   preview: {
     select: {
       title: "name",
       media: "images",
-      subtitle: "price",
+      price: "price",
     },
-    prepare(selection) {
-      const { title, subtitle, media } = selection;
-      const image = media && media[0];
+    prepare({ title, price, media }) {
       return {
-        title: title,
-        subtitle: `$${subtitle}`,
-        media: image,
+        title,
+        subtitle: `₹${price}`,
+        media: media?.[0],
       };
     },
   },

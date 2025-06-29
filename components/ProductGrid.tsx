@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { motion, AnimatePresence } from "motion/react";
-import { client } from "@/sanity/lib/client";
+import { motion, AnimatePresence } from "framer-motion";
+import { client } from "../sanity/lib/client";
 import NoProductAvailable from "./NoProductAvailable";
 import { Loader2 } from "lucide-react";
 import Container from "./Container";
 import HomeTabbar from "./HomeTabbar";
-import { productType } from "@/constants/data";
-import { Product } from "@/sanity.types";
+import { productType } from "@/constant/data";
+import { Product } from "../sanity/sanity.types";
 
 const ProductGrid = () => {
   const [products, setProducts] = useState<Product[]>([]);

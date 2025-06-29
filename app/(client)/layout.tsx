@@ -1,3 +1,6 @@
+"use client";
+
+import "../globals.css";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -5,20 +8,20 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - Shopcart online store",
-    default: "Shopcart online store",
+    template: "%s - Grabb Online Store",
+    default: "Grabb Online Store",
   },
-  description: "Shopcart online store, Your one stop shop for all your needs",
+  description: "Your one-stop shop for fashion and lifestyle.",
 };
 
-export default function RootLayout({
+export default function ClientRootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <ClerkProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen font-poppins bg-white text-black">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
@@ -26,3 +29,4 @@ export default function RootLayout({
     </ClerkProvider>
   );
 }
+

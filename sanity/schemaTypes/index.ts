@@ -5,9 +5,6 @@ import { blockContentType } from "./blockContentType";
 import { productType } from "./productType";
 import { orderType } from "./orderType";
 import { brandType } from "./brandTypes";
-import { blogType } from "./blogType";
-import { blogCategoryType } from "./blogCategoryType";
-import { authorType } from "./authorType";
 import { addressType } from "./addressType";
 import { userType } from "./userType"; 
 
@@ -18,9 +15,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     productType,
     orderType,
     brandType,
-    blogType,
-    blogCategoryType,
-    authorType,
     addressType,
     userType, 
   ],

@@ -1,6 +1,6 @@
 // schemas/userType.ts
-import { defineType, defineField } from "sanity";
-import { UserIcon } from "@sanity/icons";
+import { defineType, defineField } from "sanity"
+import { UserIcon } from "@sanity/icons"
 
 export const userType = defineType({
   name: "user",
@@ -12,12 +12,12 @@ export const userType = defineType({
       name: "clerkId",
       title: "Clerk User ID",
       type: "string",
-      description: "User ID from Clerk",
+      description: "The unique user ID provided by Clerk",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "email",
-      title: "Email",
+      title: "Email Address",
       type: "string",
       validation: (Rule) => Rule.required().email(),
     }),
@@ -25,6 +25,13 @@ export const userType = defineType({
       name: "name",
       title: "Full Name",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
   ],
-});
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "email",
+    },
+  },
+})

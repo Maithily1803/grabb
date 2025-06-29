@@ -1,10 +1,10 @@
 // schemas/addressType.ts
-import { HomeIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity"
+import { HomeIcon } from "@sanity/icons"
 
 export const addressType = defineType({
   name: "address",
-  title: "Addresses",
+  title: "Address",
   type: "document",
   icon: HomeIcon,
   fields: [
@@ -13,44 +13,33 @@ export const addressType = defineType({
       title: "User",
       type: "reference",
       to: [{ type: "user" }],
-      validation: (Rule) => Rule.required(),
+      weak: true,
     }),
     defineField({
       name: "name",
-      title: "Address Label",
+      title: "Full Name",
       type: "string",
-      description: "Label for this address (e.g. Home, Office)",
-      validation: (Rule) => Rule.required().max(50),
     }),
     defineField({
       name: "address",
       title: "Street Address",
       type: "string",
-      validation: (Rule) => Rule.required().min(5).max(200),
     }),
     defineField({
       name: "city",
       title: "City",
       type: "string",
-      validation: (Rule) => Rule.required().min(2),
     }),
     defineField({
       name: "state",
       title: "State",
       type: "string",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "pin",
       title: "PIN Code",
       type: "string",
-      validation: (Rule) =>
-        Rule.required()
-          .regex(/^\d{6}$/, {
-            name: "pinCode",
-            invert: false,
-          })
-          .error("Please enter a valid 6-digit PIN code."),
+      validation: (Rule) => Rule.regex(/^\d{6}$/).error("PIN must be 6 digits"),
     }),
     defineField({
       name: "default",

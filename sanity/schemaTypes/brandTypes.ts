@@ -1,5 +1,5 @@
-import { TagIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { TagIcon } from "@sanity/icons"
+import { defineField, defineType } from "sanity"
 
 export const brandType = defineType({
   name: "brand",
@@ -9,19 +9,25 @@ export const brandType = defineType({
   fields: [
     defineField({
       name: "title",
+      title: "Brand Name",
       type: "string",
+      validation: (Rule) => Rule.required().min(2).max(50),
     }),
     defineField({
       name: "slug",
+      title: "Slug",
       type: "slug",
       options: {
         source: "title",
+        maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "description",
+      title: "Description",
       type: "text",
+      rows: 3,
     }),
     defineField({
       name: "image",
@@ -39,4 +45,5 @@ export const brandType = defineType({
       media: "image",
     },
   },
-});
+})
+

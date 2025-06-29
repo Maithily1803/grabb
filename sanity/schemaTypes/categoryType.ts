@@ -1,6 +1,5 @@
-
-import { defineType, defineField } from "sanity";
-import { TagIcon } from "@sanity/icons";
+import { defineType, defineField } from "sanity"
+import { TagIcon } from "@sanity/icons"
 
 export const categoryType = defineType({
   name: "category",
@@ -44,7 +43,8 @@ export const categoryType = defineType({
     select: {
       title: "title",
       subtitle: "description",
-      media: "images",
+      media: "image",
     },
   },
-});
+})
+
