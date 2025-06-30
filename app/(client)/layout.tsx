@@ -1,20 +1,12 @@
+// app/(client)/layout.tsx
 "use client";
 
 import "../globals.css";
-import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
+// if you want a client-only header alternative
+import Footer from "@/components/Footer";
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s - Grabb Online Store",
-    default: "Grabb Online Store",
-  },
-  description: "Your one-stop shop for fashion and lifestyle.",
-};
-
-export default function ClientRootLayout({
+export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -22,11 +14,16 @@ export default function ClientRootLayout({
   return (
     <ClerkProvider>
       <div className="flex flex-col min-h-screen font-poppins bg-white text-black">
-        <Header />
+        {/* Optionally, use a client header here if needed */}
+        {/* <HeaderClient /> */}
         <main className="flex-1">{children}</main>
         <Footer />
       </div>
     </ClerkProvider>
   );
 }
+
+
+
+
 

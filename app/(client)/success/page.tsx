@@ -3,7 +3,7 @@
 import useStore from "@/store";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Check, Home, Package, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 

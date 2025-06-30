@@ -1,7 +1,8 @@
-
-
+// app/layout.tsx
 import "./globals.css";
-import { Toaster } from "react-hot-toast";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { ClerkProvider } from "@clerk/nextjs"; // server provider
 import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
 
@@ -16,23 +17,20 @@ export const metadata: Metadata = {
   description: "Shop fashion for men, women, kids, and accessories.",
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-        {children}
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "#000000",
-              color: "#fff",
-            },
-          }}
-        />
+        <ClerkProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </ClerkProvider>
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

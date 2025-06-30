@@ -1,16 +1,20 @@
+"use client"
 
-
-import { getMyOrders } from "@/sanity/queries";
-import { ClerkLoaded, SignedIn, UserButton, SignIn } from "@clerk/clerk-react";
-import { auth, currentUser } from "@clerk/nextjs/server";
-import { Link, Logs } from "lucide-react";
-import CartIcon from "./CartIcon";
+// components/Header.tsx
+import React from "react";
 import Container from "./Container";
-import FavoriteButton from "./FavoriteButton";
-import HeaderMenu from "./HeaderMenu";
 import Logo from "./Logo";
-import MobileMenu from "./MobileMenu";
+import HeaderMenu from "./HeaderMenu";
 import SearchBar from "./SearchBar";
+import CartIcon from "./CartIcon";
+import FavoriteButton from "./FavoriteButton";
+import SignIn from "./SignIn";
+import MobileMenu from "./MobileMenu";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { ClerkLoaded, SignedIn, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
+import { Logs } from "lucide-react";
+import { getMyOrders } from "@/sanity/queries";
 
 const Header = async () => {
   const user = await currentUser();
@@ -40,7 +44,7 @@ const Header = async () => {
             >
               <Logs />
               <span className="absolute -top-1 -right-1 bg-shop_btn_dark_green text-white h-3.5 w-3.5 rounded-full text-xs font-semibold flex items-center justify-center">
-                {orders?.length ? orders?.length : 0}
+                {orders?.length ?? 0}
               </span>
             </Link>
           )}
