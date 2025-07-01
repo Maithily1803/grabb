@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        shop_dark_green: '#014421',
-        shop_lightpink: '#fdf2f8',
+        'shop-dark-green': '#063c28', 
+        'shop-light-pink': '#fcf0e4',
       },
     },
   },
@@ -23,3 +23,4 @@ export default {
 
 
 
+ 

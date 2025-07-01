@@ -1,21 +1,17 @@
-// app/page.tsx
-import Container from "@/components/Container";
-import HomeBanner from "@/components/HomeBanner";
-import HomeCategories from "@/components/HomeCategories";
-import ProductGrid from "@/components/ProductGrid";
-import ShopByBrands from "@/components/ShopByBrands";
-import { getCategories } from "../sanity/queries";
+import { Button } from "@/components/ui/button";
+import Container from "@/components/Container"; // Import your own Container component here
 import React from "react";
 
-const Home = async () => {
-  const categories = await getCategories(6);
-
+const Home = () => {
   return (
-    <Container className="bg-shop-lightpink">
-      <HomeBanner />
-      <ProductGrid />
-      <HomeCategories categories={categories} />
-      <ShopByBrands />
+    <Container className="p-10 bg-shop-light-pink">
+      <h2 className="text-xl font-semibold">Home</h2>
+      <p>
+        lalalaks
+        smkdkmewo
+        amakj
+      </p>
+      <Button size="lg">Checkout</Button>
     </Container>
   );
 };

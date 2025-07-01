@@ -1,6 +1,4 @@
-"use client"
 
-// components/Header.tsx
 import React from "react";
 import Container from "./Container";
 import Logo from "./Logo";
@@ -10,36 +8,41 @@ import CartIcon from "./CartIcon";
 import FavoriteButton from "./FavoriteButton";
 import SignIn from "./SignIn";
 import MobileMenu from "./MobileMenu";
-import { auth, currentUser } from "@clerk/nextjs/server";
-import { ClerkLoaded, SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+
 import { Logs } from "lucide-react";
+import { ClerkLoaded, SignedIn, UserButton } from "@clerk/nextjs";
+
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { getMyOrders } from "@/sanity/queries";
 
 const Header = async () => {
   const user = await currentUser();
   const { userId } = await auth();
-  let orders = null;
-  if (userId) {
-    orders = await getMyOrders(userId);
-  }
+  const orders = userId ? await getMyOrders(userId) : [];
 
   return (
     <header className="sticky top-0 z-50 py-5 bg-white/70 backdrop-blur-md">
       <Container className="flex items-center justify-between text-lightColor">
+        {/* Left: Logo + Mobile Menu */}
         <div className="w-auto md:w-1/3 flex items-center gap-2.5 justify-start md:gap-0">
           <MobileMenu />
           <Logo />
         </div>
+
+        {/* Center: Navigation */}
         <HeaderMenu />
+
+        {/* Right: Icons + Auth */}
         <div className="w-auto md:w-1/3 flex items-center justify-end gap-5">
           <SearchBar />
           <CartIcon />
           <FavoriteButton />
 
+          {/* Orders icon with badge */}
           {user && (
             <Link
-              href={"/orders"}
+              href="/orders"
               className="group relative hover:text-shop_light_green hoverEffect"
             >
               <Logs />
@@ -49,6 +52,7 @@ const Header = async () => {
             </Link>
           )}
 
+          {/* Clerk Auth: Sign in / UserButton */}
           <ClerkLoaded>
             <SignedIn>
               <UserButton />

@@ -1,6 +1,7 @@
 {
   "name": "grabb",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.23.2",
+    "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@sanity/icons": "^3.7.4",
