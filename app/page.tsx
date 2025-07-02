@@ -4,15 +4,18 @@ import React from "react";
 
 const Home = () => {
   return (
-    <Container className="p-10 bg-shop-light-pink">
+    <div className="p-10 bg-shop_light_blue">
+    
       <h2 className="text-xl font-semibold">Home</h2>
       <p>
         lalalaks
         smkdkmewo
         amakj
       </p>
-      <Button size="lg">Checkout</Button>
-    </Container>
+      <Button variant={"default"} size="lg">Checkout</Button>
+      
+    </div>
+
   );
 };
 
