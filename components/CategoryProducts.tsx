@@ -1,5 +1,5 @@
 "use client";
-import { Category, Product } from "@/sanity.types";
+import { Category, Product } from "../sanity/sanity.types";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";

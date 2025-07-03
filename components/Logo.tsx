@@ -13,14 +13,14 @@ const Logo = ({
     <Link href={"/"} className="inline-flex">
       <h2
         className={cn(
-          "text-2xl text-shop_ font-black tracking-wider uppercase hover:text-shop_light_green hoverEffect group font-sans",
+          "text-2xl text-shop_dark_yellow font-black tracking-wider uppercase hover:text-shop_light_yellow hoverEffect group font-sans",
           className
         )}
       >
         GRAB
         <span
           className={cn(
-            "text-shop_light_green group-hover:text-shop_dark_green hoverEffect",
+            "text-shop_light_yellow group-hover:text-shop_dark_yellow hoverEffect",
             spanDesign
           )}
         >
