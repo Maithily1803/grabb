@@ -22,45 +22,49 @@ const Footer = () => {
             </SubText>
             <SocialMedia
               className="text-darkColor/60"
-              iconClassName="border-darkColor/60 hover:border-shop_light_green hover:text-shop_light_green"
+              iconClassName="border-darkColor/60 hover:border-shop-dark-yellow hover:text-shop_dark_yellow"
               tooltipClassName="bg-darkColor text-white"
             />
           </div>
           <div>
             <SubTitle>Quick Links</SubTitle>
-            <ul className="space-y-3 mt-4">
+            <SubText>
+              <ul className="space-y-3 mt-4">
               {quickLinksData?.map((item) => (
                 <li key={item?.title}>
                   <Link
                     href={item?.href}
-                    className="hover:text-shop_light_green hoverEffect font-medium"
+                    className="hover:text-shop_dark_yellow hoverEffect font-medium"
                   >
                     {item?.title}
                   </Link>
                 </li>
               ))}
             </ul>
+            </SubText>
           </div>
           <div>
             <SubTitle>Categories</SubTitle>
-            <ul className="space-y-3 mt-4">
+            <SubText>
+              <ul className="space-y-3 mt-4">
               {categoriesData?.map((item) => (
                 <li key={item?.title}>
                   <Link
                     href={`/category/${item?.href}`}
-                    className="hover:text-shop_light_green hoverEffect font-medium"
+                    className="hover:text-shop_dark_yellow hoverEffect font-medium"
                   >
                     {item?.title}
                   </Link>
                 </li>
               ))}
             </ul>
+            </SubText>
           </div>
           <div className="space-y-4">
             <SubTitle>Newsletter</SubTitle>
             <SubText>
               Subscribe to our newsletter to receive updates and exclusive
-              offers
+              offers.
             </SubText>
             <form className="space-y-3">
               <Input placeholder="Enter your email" type="email" required />

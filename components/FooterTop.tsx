@@ -17,14 +17,14 @@ const data: ContactItemData[] = [
   },
   {
     title: "Call Us",
-    subtitle: "+022 *** *** ***",
+    subtitle: "+91 **********",
     icon: (
       <Phone className="h-6 w-6 text-gray-600 group-hover:text-primary transition-colors" />
     ),
   },
   {
     title: "Working Hours",
-    subtitle: "Mon - Sat: 10:00 AM - 7:00 PM",
+    subtitle: "Mon-Sat: 10:00AM - 7:00PM",
     icon: (
       <Clock className="h-6 w-6 text-gray-600 group-hover:text-primary transition-colors" />
     ),

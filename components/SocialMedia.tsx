@@ -1,4 +1,4 @@
-import { Facebook, Github, Linkedin, Slack, Youtube } from "lucide-react";
+import { Github, Linkedin, Twitter, Youtube } from "lucide-react";
 import React from "react";
 import {
   Tooltip,
@@ -14,11 +14,7 @@ interface Props {
   tooltipClassName?: string;
 }
 const socialLink = [
-  {
-    title: "Youtube",
-    href: "https://www.youtube.com/@gitHubProjectss",
-    icon: <Youtube className="w-5 h-5" />,
-  },
+ 
   {
     title: "Github",
     href: "https://github.com/Maithily1803",
@@ -30,14 +26,14 @@ const socialLink = [
     icon: <Linkedin className="w-5 h-5" />,
   },
   {
-    title: "Facebook",
-    href: "https://www.facebook.com/",
-    icon: <Facebook className="w-5 h-5" />,
+    title: "Twitter",
+    href: "https://x.com/maithilyyys",
+    icon: <Twitter className="w-5 h-5" />,
   },
-  {
-    title: "Slack",
-    href: "https://slack.com/",
-    icon: <Slack className="w-5 h-5" />,
+   {
+    title: "Youtube",
+    href: "https://www.youtube.com/@gitHubProjectss",
+    icon: <Youtube className="w-5 h-5" />,
   },
 ];
 
@@ -54,7 +50,7 @@ const SocialMedia = ({ className, iconClassName, tooltipClassName }: Props) => {
                 rel="noopener noreferrer"
                 href={item?.href}
                 className={cn(
-                  "p-2 border rounded-full hover:text-white hover:border-shop_light_green hoverEffect",
+                  "p-2 border rounded-full hover:text-white hover:border-shop_dark_yellow hoverEffect",
                   iconClassName
                 )}
               >

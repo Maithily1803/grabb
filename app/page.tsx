@@ -5,7 +5,7 @@ import HomeBanner from "@/components/HomeBanner";
 
 const Home = () => {
   return (
-    <Container className=" bg-shop_light_blue">
+    <Container className="bg-white p-4">
       <HomeBanner />
     
       
