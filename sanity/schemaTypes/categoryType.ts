@@ -11,7 +11,7 @@ export const categoryType = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      description: "Category name (e.g., Men, Women, Kids, Accessories)",
+      description: "Category name (e.g., T-shirts, shirts, dresses)",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -29,6 +29,16 @@ export const categoryType = defineType({
       title: "Description",
       type: "text",
       rows: 3,
+    }),
+    defineField({
+      name: "range",
+      type: "number",
+      description: "Starting from",
+    }),
+    defineField({
+      name: "featured",
+      type: "boolean",
+      initialValue: false,
     }),
     defineField({
       name: "image",

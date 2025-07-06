@@ -1,5 +1,5 @@
 import React from "react";
-import { BRANDS_QUERYResult } from "sanity.types";
+import { BRANDS_QUERYResult } from "@sanity/types";
 import Title from "../Title";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";

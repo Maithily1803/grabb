@@ -11,7 +11,7 @@ const Home = async () => {
   const categories = await getCategories(6);
 
 return (
-    <Container className="bg-shop_light_pink">
+    <Container className="bg-white">
       <HomeBanner />
       <ProductGrid />
       <HomeCategories categories={categories} />

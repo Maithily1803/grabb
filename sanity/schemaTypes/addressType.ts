@@ -16,6 +16,11 @@ export const addressType = defineType({
       weak: true,
     }),
     defineField({
+      name: "email",
+      title: "User Email",
+      type: "email",
+    }),
+    defineField({
       name: "name",
       title: "Full Name",
       type: "string",
@@ -45,6 +50,7 @@ export const addressType = defineType({
       name: "default",
       title: "Default Address",
       type: "boolean",
+      description: "Is this the default shipping address ?",
       initialValue: false,
     }),
     defineField({

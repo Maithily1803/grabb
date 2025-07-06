@@ -1,4 +1,4 @@
-import { Product } from "@/sanity.types";
+import { Product } from "../sanity/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import React from "react";
@@ -12,7 +12,7 @@ import AddToCartButton from "./AddToCartButton";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <div className="text-sm border-[1px] rounded-md border-darkBlue/20 group bg-white">
+    <div className="text-sm border-[1px] rounded-md border-darkBlue/70 group bg-white">
       <div className="relative group overflow-hidden bg-shop_light_bg">
         {product?.images && (
           <Link href={`/product/${product?.slug?.current}`}>
@@ -35,12 +35,12 @@ const ProductCard = ({ product }: { product: Product }) => {
         ) : (
           <Link
             href={"/deal"}
-            className="absolute top-2 left-2 z-10 border border-shop_orange/50 p-1 rounded-full group-hover:border-shop_orange hover:text-shop_dark_green hoverEffect"
+            className="absolute top-2 left-2 z-10 border border-shop_rose/50 p-1 rounded-full group-hover:border-shop_rose hover:text-shop_dark_yellow hoverEffect"
           >
             <Flame
               size={18}
               fill="#fb6c08"
-              className="text-shop_orange/50 group-hover:text-shop_orange hoverEffect"
+              className="text-shop_rose/50 group-hover:text-shop_rose hoverEffect"
             />
           </Link>
         )}
@@ -58,7 +58,7 @@ const ProductCard = ({ product }: { product: Product }) => {
               <StarIcon
                 key={index}
                 className={
-                  index < 4 ? "text-shop_light_green" : " text-lightText"
+                  index < 4 ? "text-shop_light_yellow" : " text-lightText"
                 }
                 fill={index < 4 ? "#93D991" : "#ababab"}
               />
@@ -70,7 +70,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         <div className="flex items-center gap-2.5">
           <p className="font-medium">In Stock</p>
           <p
-            className={`${product?.stock === 0 ? "text-red-600" : "text-shop_dark_green/80 font-semibold"}`}
+            className={`${product?.stock === 0 ? "text-red-600" : "text-shop_dark_yellow/80 font-semibold"}`}
           >
             {(product?.stock as number) > 0 ? product?.stock : "unavailable"}
           </p>

@@ -98,11 +98,11 @@ export const productType = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Topwear", value: "topwear" },
-          { title: "Bottomwear", value: "bottomwear" },
-          { title: "Footwear", value: "footwear" },
+          { title: "Men", value: "men" },
+          { title: "Women", value: "women" },
+          { title: "Kids", value: "kids" },
           { title: "Accessories", value: "accessories" },
-          { title: "Others", value: "others" },
+          
         ],
         layout: "dropdown",
       },
@@ -113,7 +113,7 @@ export const productType = defineType({
       name: "isFeatured",
       title: "Featured Product",
       type: "boolean",
-      description: "Mark as featured to show on homepage or deals section",
+      description: "Toggle to Featured on or off",
       initialValue: false,
     }),
   ],

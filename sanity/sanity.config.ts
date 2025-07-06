@@ -7,7 +7,7 @@ import {visionTool} from '@sanity/vision'
 import { deskTool } from "sanity/desk";
 
 import { categoryType } from "./schemaTypes/categoryType";
-import { blockContentType } from "./schemaTypes/blockContentType";
+
 import { productType } from "./schemaTypes/productType";
 import { orderType } from "./schemaTypes/orderType";
 import { brandType } from "./schemaTypes/brandTypes";
@@ -26,7 +26,7 @@ export default defineConfig({
   schema: {
     types: [
       categoryType,
-      blockContentType,
+     
       productType,
       orderType,
       brandType,
