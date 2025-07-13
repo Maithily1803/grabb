@@ -28,20 +28,18 @@ const Footer = () => {
           </div>
           <div>
             <SubTitle>Quick Links</SubTitle>
-            <SubText>
-              <ul className="space-y-3 mt-4">
+              <ul className="space-y-3 mt-4 text-gray-600 text-sm">
               {quickLinksData?.map((item) => (
                 <li key={item?.title}>
                   <Link
-                    href={item?.href}
-                    className="hover:text-shop_dark_yellow hoverEffect font-medium"
+                  href={item?.href}
+                  className="hover:text-shop_dark_yellow hoverEffect font-medium"
                   >
                     {item?.title}
                   </Link>
                 </li>
               ))}
             </ul>
-            </SubText>
           </div>
           <div>
             <SubTitle>Categories</SubTitle>
@@ -50,7 +48,7 @@ const Footer = () => {
               {categoriesData?.map((item) => (
                 <li key={item?.title}>
                   <Link
-                    href={`/category/${item?.href}`}
+                    href={`/category/${item?.value}`}
                     className="hover:text-shop_dark_yellow hoverEffect font-medium"
                   >
                     {item?.title}

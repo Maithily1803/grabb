@@ -76,11 +76,10 @@ const ProductCard = ({ product }: { product: Product }) => {
           </p>
         </div>
 
-        <PriceView
-          price={product?.price}
-          discount={product?.discount}
-          className="text-sm"
-        />
+        
+    <PriceView price={product.price} discount={product.discount} />
+
+        
         <AddToCartButton product={product} className="w-36 rounded-full" />
       </div>
     </div>

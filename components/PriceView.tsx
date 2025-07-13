@@ -1,27 +1,30 @@
 import { twMerge } from "tailwind-merge";
-import { cn } from "@/lib/utils";
 import PriceFormatter from "./PriceFormatter";
 
 interface Props {
-  price: number | undefined;
-  discount: number | undefined;
+  price?: number;
+  discount?: number;
   className?: string;
 }
-const PriceView = ({ price, discount, className }: Props) => {
+
+const PriceView = ({ price = 0, discount = 0, className }: Props) => {
+  const hasDiscount = discount > 0;
+  const discountedPrice = price * (1 - discount / 100);
+
   return (
-    <div className="flex items-center justify-between gap-5">
+    <div className={twMerge("flex items-center justify-between gap-5", className)}>
       <div className="flex items-center gap-2">
+        {/* Show discounted or regular price in yellow */}
         <PriceFormatter
-          amount={price}
-          className={cn("text-shop_dark_green", className)}
+          amount={hasDiscount ? discountedPrice : price}
+          className="text-shop_dark_yellow"
         />
-        {price && discount && (
+
+        {/* If there is a discount, show original price struck through */}
+        {hasDiscount && (
           <PriceFormatter
-            amount={price + (discount * price) / 100}
-            className={twMerge(
-              "line-through text-xs font-normal text-zinc-500",
-              className
-            )}
+            amount={price}
+            className="line-through text-xs font-normal text-zinc-500"
           />
         )}
       </div>
@@ -30,3 +33,4 @@ const PriceView = ({ price, discount, className }: Props) => {
 };
 
 export default PriceView;
+

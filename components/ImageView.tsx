@@ -1,33 +1,30 @@
 "use client";
-import {
-  internalGroqTypeReferenceTo,
-  SanityImageCrop,
-  SanityImageHotspot,
-} from "@/sanity.types";
+
+import { SanityImageCrop, SanityImageHotspot } from "../sanity/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React, { useState } from "react";
 
+interface SanityImage {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+  };
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  _type: "image";
+  _key: string;
+}
+
 interface Props {
-  images?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-    _key: string;
-  }>;
-  isStock?: number | undefined;
+  images?: SanityImage[];
+  isStock?: number;
 }
 
 const ImageView = ({ images = [], isStock }: Props) => {
-  const [active, setActive] = useState(images[0]);
-  console.log(active);
+  const [active, setActive] = useState<SanityImage>(images[0]);
 
   return (
     <div className="w-full md:w-1/2 space-y-2 md:space-y-4">
@@ -52,12 +49,15 @@ const ImageView = ({ images = [], isStock }: Props) => {
           />
         </motion.div>
       </AnimatePresence>
+
       <div className="grid grid-cols-6 gap-2 h-20 md:h-24">
-        {images?.map((image) => (
+        {images.map((image) => (
           <button
-            key={image?._key}
+            key={image._key}
             onClick={() => setActive(image)}
-            className={`border rounded-md overflow-hidden ${active?._key === image?._key ? "border-darkColor opacity-100" : "opacity-80"}`}
+            className={`border rounded-md overflow-hidden ${
+              active._key === image._key ? "border-darkColor opacity-100" : "opacity-80"
+            }`}
           >
             <Image
               src={urlFor(image).url()}

@@ -10,30 +10,34 @@ import Container from "./Container";
 import HomeTabbar from "./HomeTabbar";
 import { productType } from "@/constant/data";
 import { Product } from "../sanity/sanity.types";
+import { title } from "process";
 
 const ProductGrid = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState(productType[0]?.title || "");
-  const query = `*[_type == "product" && variant == $variant] | order(name asc){
-  ...,"categories": categories[]->title
+  const query = `*[_type == "product" && variant == $variant] | order(name desc){
+  _id,
+  name,
+  price,
+  discount,
+  variant,
+  stock,
+  categories[]->{
+    title
+  },
+  images[]{
+    asset->{
+      _id,
+      url
+    },
+    alt
+  }
 }`;
   const params = { variant: selectedTab.toLowerCase() };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await client.fetch(query, params);
-        setProducts(await response);
-      } catch (error) {
-        console.log("Product fetching Error", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [selectedTab]);
+  useEffect(() => {     const fetchData = async () => {       setLoading(true);       try {         const response = await client.fetch(query, params);         setProducts(await response);       } catch (error) {         console.log("Product fetching Error", error);       } finally {         setLoading(false);       }     };     fetchData();   }, [selectedTab]);
+
 
   return (
     <Container className="flex flex-col lg:px-0 my-10">

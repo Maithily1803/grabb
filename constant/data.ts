@@ -23,8 +23,8 @@ export const headerData = [
 ];
 
 export const productType = [
-  { title: "Men", href: "men" },
-  { title: "Women", href: "women" },
-  { title: "Kids", href: "kids" },
-  { title: "Accessories", href: "accessories" },
+  { title: "Men", value: "men" },
+  { title: "Women", value: "women" },
+  { title: "Kids", value: "kids" },
+  { title: "Accessories", value: "accessories" },
 ];
