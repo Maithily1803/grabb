@@ -7,9 +7,11 @@ export const BRANDS_QUERY = defineQuery(`*[_type=='brand'] | order(name asc)`);
 export const DEAL_PRODUCTS = defineQuery(
   `*[_type == 'product' && status == 'hot'] | order(name asc){
     ...,
-    "categories": categories[]->title
+    "categories": categories[]->title,
+    "status": status
   }`
 );
+
 
 // ✅ Get product details by slug
 export const PRODUCT_BY_SLUG_QUERY = defineQuery(

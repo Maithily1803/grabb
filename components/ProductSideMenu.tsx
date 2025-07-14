@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Product } from "@/sanity.types";
+import { Product } from "../sanity/sanity.types";
 import useStore from "@/store";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -39,7 +39,7 @@ const ProductSideMenu = ({
     >
       <div
         onClick={handleFavorite}
-        className={`p-2.5 rounded-full hover:bg-shop_dark_green/80 hover:text-white hoverEffect  ${existingProduct ? "bg-shop_dark_green/80 text-white" : "bg-lightColor/10"}`}
+        className={`p-2.5 rounded-full hover:bg-shop_rose/80 hover:text-white hoverEffect  ${existingProduct ? "bg-shop_dark_yellow/80 text-white" : "bg-lightColor/10"}`}
       >
         <Heart size={15} />
       </div>

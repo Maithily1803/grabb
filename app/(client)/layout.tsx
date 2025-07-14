@@ -7,8 +7,8 @@ import "../globals.css"; // make sure you have Tailwind directives here
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - GRABB Online Store",
-    default: "GRABB Online Store",
+    template: "%s - GRABB | Online Shopping",
+    default: "GRABB | Online Shopping",
   },
   description:
     "GRABB your fit. GRABB your moment. Because fashion isn't just worn — it's owned.",

@@ -19,7 +19,7 @@ const CategoryPage = async ({ params }: PageProps) => {
       <Container>
         <Title>
           Products by Category:{" "}
-          <span className="font-bold text-green-600 capitalize tracking-wide">
+          <span className="font-bold text-shop_dark_yellow capitalize tracking-wide">
             {slug}
           </span>
         </Title>

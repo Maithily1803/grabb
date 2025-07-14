@@ -22,6 +22,7 @@ const ProductGrid = () => {
   price,
   discount,
   variant,
+  status,
   stock,
   categories[]->{
     title
