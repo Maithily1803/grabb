@@ -19,6 +19,7 @@ const ProductGrid = () => {
   const query = `*[_type == "product" && variant == $variant] | order(name desc){
   _id,
   name,
+  slug,
   price,
   discount,
   variant,

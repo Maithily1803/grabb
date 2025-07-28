@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-import { Product } from "./sanity/sanity.types"; // adjust path if needed
+import { Product } from "./sanity/sanity.types"; // adjust the path if needed
 
 export interface CartItem {
   product: Product;
@@ -22,10 +21,17 @@ interface StoreState {
   getItemCount: (productId: string) => number;
   getGroupedItems: () => CartItem[];
 
-  addToFavorite: (product: Product) => void;
+  addToFavorite: (product: Product) => Promise<void>;
   removeFromFavorite: (productId: string) => void;
   resetFavorite: () => void;
 }
+
+// Helper to calculate discounted price
+const calculateDiscountedPrice = (product: Product) => {
+  const price = product.price ?? 0;
+  const discount = ((product.discount ?? 0) * price) / 100;
+  return price - discount;
+};
 
 const useStore = create<StoreState>()(
   persist(
@@ -73,16 +79,14 @@ const useStore = create<StoreState>()(
       resetCart: () => set({ items: [] }),
 
       getTotalPrice: () =>
-        get().items.reduce(
-          (total, item) => total + (item.product.price ?? 0) * item.quantity,
-          0
-        ),
+        get().items.reduce((total, item) => {
+          const discountedPrice = calculateDiscountedPrice(item.product);
+          return total + discountedPrice * item.quantity;
+        }, 0),
 
       getSubTotalPrice: () =>
         get().items.reduce((total, item) => {
-          const price = item.product.price ?? 0;
-          const discount = ((item.product.discount ?? 0) * price) / 100;
-          const discountedPrice = price - discount; // corrected discount calc: price minus discount
+          const discountedPrice = calculateDiscountedPrice(item.product);
           return total + discountedPrice * item.quantity;
         }, 0),
 
@@ -93,20 +97,24 @@ const useStore = create<StoreState>()(
 
       getGroupedItems: () => get().items,
 
-      addToFavorite: (product) =>
-        set((state) => {
-          const isFavorite = state.favoriteProduct.some(
-            (item) => item._id === product._id
-          );
-          return {
-            favoriteProduct: isFavorite
-              ? state.favoriteProduct.filter((item) => item._id !== product._id)
-              : [...state.favoriteProduct, product],
-          };
-        }),
+      addToFavorite: (product: Product) => {
+        return new Promise<void>((resolve) => {
+          set((state: StoreState) => {
+            const isFavorite = state.favoriteProduct.some(
+              (item) => item._id === product._id
+            );
+            return {
+              favoriteProduct: isFavorite
+                ? state.favoriteProduct.filter((item) => item._id !== product._id)
+                : [...state.favoriteProduct, product],
+            };
+          });
+          resolve();
+        });
+      },
 
-      removeFromFavorite: (productId) =>
-        set((state) => ({
+      removeFromFavorite: (productId: string) =>
+        set((state: StoreState) => ({
           favoriteProduct: state.favoriteProduct.filter(
             (item) => item._id !== productId
           ),
@@ -115,7 +123,7 @@ const useStore = create<StoreState>()(
       resetFavorite: () => set({ favoriteProduct: [] }),
     }),
     {
-      name: "cart-store", // localStorage key
+      name: "cart-store",
     }
   )
 );

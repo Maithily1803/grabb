@@ -12,42 +12,40 @@ import ProductSideMenu from "@/components/ProductSideMenu";
 import QuantityButtons from "@/components/QuantityButtons";
 import Title from "@/components/Title";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Separator } from "@/components/ui/separator";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Address } from "@/sanity.types";
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radio-group";
+import { Address } from "@/sanity/sanity.types";
 import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/images";
+import { urlFor } from "@/sanity/lib/image";
 import useStore from "@/store";
 import { useAuth, useUser } from "@clerk/nextjs";
-import { ShoppingBag, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const CartPage = () => {
   const {
     deleteCartProduct,
-    getTotalPrice,
-    getItemCount,
-    getSubTotalPrice,
     resetCart,
     getGroupedItems,
   } = useStore();
-  const [loading, setLoading] = useState(false);
+
   const groupedItems = getGroupedItems();
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const [addresses, setAddresses] = useState<Address[] | null>(null);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchAddresses = async () => {
     setLoading(true);
@@ -56,13 +54,9 @@ const CartPage = () => {
       const data = await client.fetch(query);
       setAddresses(data);
       const defaultAddress = data.find((addr: Address) => addr.default);
-      if (defaultAddress) {
-        setSelectedAddress(defaultAddress);
-      } else if (data.length > 0) {
-        setSelectedAddress(data[0]);
-      }
+      setSelectedAddress(defaultAddress ?? data[0] ?? null);
     } catch (error) {
-      console.log("Addresses fetching error:", error);
+      console.error("Address fetch error:", error);
     } finally {
       setLoading(false);
     }
@@ -79,6 +73,22 @@ const CartPage = () => {
     }
   };
 
+  const getSubTotal = () => {
+    return groupedItems.reduce((acc, item) => {
+      const price = item.product.price ?? 0;
+      return acc + price * item.quantity;
+    }, 0);
+  };
+
+  const getTotal = () => {
+    return groupedItems.reduce((acc, item) => {
+      const price = item.product.price ?? 0;
+      const discount = item.product.discount ?? 0;
+      const discountedPrice = price * (1 - discount / 100);
+      return acc + discountedPrice * item.quantity;
+    }, 0);
+  };
+
   const handleCheckout = async () => {
     if (!selectedAddress || !user) return;
 
@@ -92,9 +102,18 @@ const CartPage = () => {
         address: selectedAddress,
       };
 
-      const result = await createRazorpayOrder(groupedItems, metadata);
+      const result = await createRazorpayOrder({
+        amount: getTotal() * 100,
+        items: groupedItems.map((item) => ({
+          productId: item.product._id,
+          quantity: item.quantity,
+        })),
+        userId: user.id,
+        metadata,
+      });
+
       if ("error" in result) {
-        toast.error(result.error);
+        toast.error(String(result.error));
       } else if (result?.redirectUrl) {
         window.location.href = result.redirectUrl;
       }
@@ -114,32 +133,56 @@ const CartPage = () => {
         <Title>Shopping Cart</Title>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-10">
           <div className="space-y-3 lg:col-span-2">
-            {groupedItems.map((item) => (
-              <Card key={item.product._id}>
-                <CardContent className="p-3">
-                  <div className="flex gap-3">
-                    <Image
-                      src={urlFor(item.product.image[0]).url()}
-                      alt={item.product.title}
-                      width={150}
-                      height={150}
-                      className="object-cover rounded-md w-32 h-32"
-                    />
-                    <div className="flex-1 space-y-2">
-                      <h2 className="text-lg font-semibold">{item.product.title}</h2>
-                      <QuantityButtons id={item.product._id} />
-                      <div className="flex justify-between text-sm text-gray-600">
-                        <PriceFormatter price={item.product.price} />
-                        <Trash
-                          onClick={() => deleteCartProduct(item.product._id)}
-                          className="cursor-pointer hover:text-red-500"
+            {groupedItems.map((item) => {
+              const price = item.product.price ?? 0;
+              const discount = item.product.discount ?? 0;
+              const discountedPrice = price * (1 - discount / 100);
+              const itemTotal = discountedPrice * item.quantity;
+
+              return (
+                <Card key={item.product._id}>
+                  <CardContent className="p-3">
+                    <div className="flex gap-3">
+                      {item.product.images?.[0] ? (
+                        <Image
+                          src={urlFor(item.product.images[0]).url()}
+                          alt={item.product.name ?? "Product Image"}
+                          width={128}
+                          height={128}
+                          className="object-cover rounded-md w-32 h-32"
                         />
+                      ) : (
+                        <div className="w-32 h-32 bg-gray-100 flex items-center justify-center rounded-md text-gray-500 text-sm">
+                          No Image
+                        </div>
+                      )}
+
+                      <div className="flex-1 space-y-2">
+                        <h2 className="text-lg font-semibold">{item.product.name ?? "No Name"}</h2>
+                        <QuantityButtons product={item.product} />
+                        <div className="flex justify-between items-center">
+                          <div className="text-sm text-gray-600 flex gap-2 items-center">
+                            <PriceFormatter amount={discountedPrice} />
+                            {discount > 0 && (
+                              <span className="line-through text-red-400">
+                                <PriceFormatter amount={price} />
+                              </span>
+                            )}
+                          </div>
+                          <Trash
+                            onClick={() => deleteCartProduct(item.product._id)}
+                            className="cursor-pointer hover:text-red-500"
+                          />
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          Total: <PriceFormatter amount={itemTotal} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
 
           <div className="space-y-4">
@@ -148,9 +191,9 @@ const CartPage = () => {
                 <CardTitle>Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
-                <p>Subtotal: ₹{getSubTotalPrice()}</p>
+                <p>Subtotal: <PriceFormatter amount={getSubTotal()} /></p>
                 <p>Tax: ₹0</p>
-                <p className="font-semibold">Total: ₹{getTotalPrice()}</p>
+                <p className="font-semibold">Total: <PriceFormatter amount={getTotal()} /></p>
               </CardContent>
             </Card>
 
@@ -167,9 +210,24 @@ const CartPage = () => {
                     }
                   >
                     {addresses.map((address) => (
-                      <RadioGroupItem key={address._id} value={address._id}>
-                        <Label className="ml-2">{address.addressLine1}</Label>
-                      </RadioGroupItem>
+                      <div
+                        key={address._id}
+                        className={`flex items-start gap-2 py-2 cursor-pointer ${
+                          selectedAddress?._id === address._id
+                            ? "text-shop_dark_green"
+                            : ""
+                        }`}
+                        onClick={() => setSelectedAddress(address)}
+                      >
+                        <RadioGroupItem value={address._id} />
+                        <Label className="grid gap-1.5 flex-1">
+                          <span className="font-semibold">{address.name}</span>
+                          <span className="text-sm text-black/60">
+                            {address.address}, {address.city}, {address.state}{" "}
+                            {address.pin}
+                          </span>
+                        </Label>
+                      </div>
                     ))}
                   </RadioGroup>
                 ) : (
@@ -183,12 +241,11 @@ const CartPage = () => {
                 Reset
               </Button>
               <Button onClick={handleCheckout} disabled={loading}>
-                Checkout
+                {loading ? "Processing..." : "Checkout"}
               </Button>
             </div>
           </div>
         </div>
-        <ProductSideMenu />
       </Container>
     </div>
   );

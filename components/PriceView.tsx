@@ -5,26 +5,38 @@ interface Props {
   price?: number;
   discount?: number;
   className?: string;
+  priceClassName?: string;
 }
 
-const PriceView = ({ price = 0, discount = 0, className }: Props) => {
+const PriceView = ({ price = 0, discount = 0, className, priceClassName }: Props) => {
   const hasDiscount = discount > 0;
   const discountedPrice = price * (1 - discount / 100);
 
   return (
     <div className={twMerge("flex items-center justify-between gap-5", className)}>
-      <div className="flex items-center gap-2">
-        {/* Show discounted or regular price in yellow */}
+      <div className="flex items-center gap-3">
+        {/* Final Price */}
         <PriceFormatter
           amount={hasDiscount ? discountedPrice : price}
-          className="text-shop_dark_yellow"
+          className={twMerge("text-shop_dark_yellow", priceClassName)}
         />
 
-        {/* If there is a discount, show original price struck through */}
+        {/* Original Price (strikethrough) */}
         {hasDiscount && (
           <PriceFormatter
             amount={price}
-            className="line-through text-xs font-normal text-zinc-500"
+            className={twMerge(
+              "line-through text-gray-400",
+              // Optional: scale it a bit smaller than main price
+              priceClassName?.replace(/text-(\w+)/g, (match) => {
+                // Convert text-3xl → text-lg, text-2xl → text-base, etc.
+                if (match === "text-3xl") return "text-xl";
+                if (match === "text-2xl") return "text-lg";
+                if (match === "text-xl") return "text-base";
+                if (match === "text-lg") return "text-sm";
+                return "text-xs";
+              })
+            )}
           />
         )}
       </div>

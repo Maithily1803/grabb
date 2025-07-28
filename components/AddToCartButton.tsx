@@ -18,6 +18,12 @@ const AddToCartButton = ({ product, className }: Props) => {
   const itemCount = getItemCount(product?._id);
   const isOutOfStock = product?.stock === 0;
 
+  // ✅ Calculate discounted price
+  const discountedPrice =
+    product?.price && product?.discount
+      ? product.price * (1 - product.discount / 100)
+      : product.price || 0;
+
   const handleAddToCart = () => {
     if ((product?.stock as number) > itemCount) {
       addItem(product);
@@ -28,6 +34,7 @@ const AddToCartButton = ({ product, className }: Props) => {
       toast.error("Can not add more than available stock");
     }
   };
+
   return (
     <div className="w-full h-12 flex items-center">
       {itemCount ? (
@@ -39,7 +46,7 @@ const AddToCartButton = ({ product, className }: Props) => {
           <div className="flex items-center justify-between border-t pt-1">
             <span className="text-xs font-semibold">Subtotal</span>
             <PriceFormatter
-              amount={product?.price ? product?.price * itemCount : 0}
+              amount={discountedPrice * itemCount}
             />
           </div>
         </div>

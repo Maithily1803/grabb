@@ -15,8 +15,24 @@ export const DEAL_PRODUCTS = defineQuery(
 
 // ✅ Get product details by slug
 export const PRODUCT_BY_SLUG_QUERY = defineQuery(
-  `*[_type == "product" && slug.current == $slug] | order(name asc) [0]`
+  `*[_type == "product" && slug.current == $slug][0]{
+    ...,
+    "id": _id,
+    "slug": slug.current,
+    "categories": categories[]->title,
+    "brand": brand->title,
+    images[],
+    price,
+    discount,
+    description,
+    name,
+    variant,
+    stock,
+    isFeatured,
+    status
+  }`
 );
+
 
 // ✅ Get brand info for a product by slug
 export const BRAND_QUERY = defineQuery(

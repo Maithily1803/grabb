@@ -1,5 +1,5 @@
 "use client";
-import { BRANDS_QUERYResult, Category, Product } from "../sanity/sanity.types";
+import { Brand, Category, Product } from "../sanity/sanity.types";
 import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import Title from "./Title";
@@ -14,7 +14,7 @@ import ProductCard from "./ProductCard";
 
 interface Props {
   categories: Category[];
-  brands: BRANDS_QUERYResult;
+  brands: Brand[];
 }
 const Shop = ({ categories, brands }: Props) => {
   const searchParams = useSearchParams();
@@ -40,15 +40,18 @@ const Shop = ({ categories, brands }: Props) => {
         maxPrice = max;
       }
       const query = `
-      *[_type == 'product' 
-        && (!defined($selectedCategory) || references(*[_type == "category" && slug.current == $selectedCategory]._id))
-        && (!defined($selectedBrand) || references(*[_type == "brand" && slug.current == $selectedBrand]._id))
-        && price >= $minPrice && price <= $maxPrice
-      ] 
-      | order(name asc) {
-        ...,"categories": categories[]->title
-      }
-    `;
+  *[_type == 'product' 
+    && (!defined($selectedCategory) || references(*[_type == "category" && slug.current == $selectedCategory]._id))
+    && (!defined($selectedBrand) || references(*[_type == "brand" && slug.current == $selectedBrand]._id))
+    && price >= $minPrice && price <= $maxPrice
+  ] 
+  | order(name asc) {
+    ...,
+    "categories": categories[]->title,
+    "images": images[]{asset->{url}}
+  }
+`;
+
       const data = await client.fetch(
         query,
         { selectedCategory, selectedBrand, minPrice, maxPrice },

@@ -1,4 +1,4 @@
-import { Product } from "@/sanity.types";
+import { Product } from "@/sanity/sanity.types";
 import useStore from "@/store";
 import React from "react";
 import { Button } from "./ui/button";
@@ -10,26 +10,27 @@ interface Props {
   product: Product;
   className?: string;
 }
+
 const QuantityButtons = ({ product, className }: Props) => {
   const { addItem, removeItem, getItemCount } = useStore();
   const itemCount = getItemCount(product?._id);
   const isOutOfStock = product?.stock === 0;
 
   const handleRemoveProduct = () => {
-    removeItem(product?._id);
+    removeItem(product._id);
     if (itemCount > 1) {
-      toast.success("Quantity Decreased successfully!");
+      toast.success("Quantity decreased!");
     } else {
-      toast.success(`${product?.name?.substring(0, 12)} removed successfully!`);
+      toast.success(`${product.name?.substring(0, 20)} removed from cart`);
     }
   };
 
   const handleAddToCart = () => {
-    if ((product?.stock as number) > itemCount) {
+    if ((product.stock ?? 0) > itemCount) {
       addItem(product);
-      toast.success("Quantity Increased successfully!");
+      toast.success("Quantity increased!");
     } else {
-      toast.error("Can not add more than available stock");
+      toast.error("Cannot add more than available stock");
     }
   };
 
@@ -40,21 +41,23 @@ const QuantityButtons = ({ product, className }: Props) => {
         variant="outline"
         size="icon"
         disabled={itemCount === 0 || isOutOfStock}
-        className="w-6 h-6 border-[1px] hover:bg-shop_dark_green/20 hoverEffect"
+        className="w-6 h-6 border-[1px] hover:bg-red-100 hoverEffect"
       >
-        <Minus />
+        <Minus className="w-4 h-4" />
       </Button>
+
       <span className="font-semibold text-sm w-6 text-center text-darkColor">
         {itemCount}
       </span>
+
       <Button
         onClick={handleAddToCart}
         variant="outline"
         size="icon"
         disabled={isOutOfStock}
-        className="w-6 h-6 border-[1px] hover:bg-shop_dark_green/20 hoverEffect"
+        className="w-6 h-6 border-[1px] hover:bg-green-100 hoverEffect"
       >
-        <Plus />
+        <Plus className="w-4 h-4" />
       </Button>
     </div>
   );
