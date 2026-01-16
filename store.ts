@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Product } from "./sanity/sanity.types"; // adjust the path if needed
+import { Product } from "@/sanity.types"; // adjust the path if needed
 
 export interface CartItem {
   product: Product;

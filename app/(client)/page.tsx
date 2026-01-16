@@ -1,4 +1,4 @@
-// app/page.tsx
+// app/(client)/page.tsx
 import Container from "@/components/Container";
 import HomeBanner from "@/components/HomeBanner";
 import HomeCategories from "@/components/HomeCategories";
@@ -10,16 +10,21 @@ import React from "react";
 const Home = async () => {
   const categories = await getCategories(6);
 
-return (
+  const categoriesWithCount = categories.map((category) => ({
+    ...category,
+    productCount: 0, 
+  }));
+
+  return (
     <Container className="bg-white">
       <HomeBanner />
       <ProductGrid />
-      <HomeCategories categories={categories} />
+      <HomeCategories categories={categoriesWithCount} />
       <ShopByBrands />
     </Container>
   );
-
-  
 };
 
 export default Home;
+
+

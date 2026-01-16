@@ -1,4 +1,4 @@
-import { MY_ORDERS_QUERYResult } from "../sanity/sanity.types";
+import { MY_ORDERS_QUERYResult, OrderProduct } from "@/sanity.types";
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
@@ -72,18 +72,19 @@ const OrderDetailDialog: React.FC<OrderDetailsDialogProps> = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {order.products?.map((product, index) => (
+            {order.products?.map((product: OrderProduct, index: number) => (
               <TableRow key={index}>
                 <TableCell className="flex items-center gap-2">
-                  {product?.product?.images && (
-                    <Image
-                      src={urlFor(product?.product?.images[0]).url()}
-                      alt="productImage"
-                      width={50}
-                      height={50}
-                      className="border rounded-sm"
-                    />
-                  )}
+                  {product?.product?.images?.[0] && (
+  <Image
+    src={urlFor(product.product.images[0]).url()}
+    alt="productImage"
+    width={50}
+    height={50}
+    className="border rounded-sm"
+  />
+)}
+
 
                   {product?.product && product?.product?.name}
                 </TableCell>

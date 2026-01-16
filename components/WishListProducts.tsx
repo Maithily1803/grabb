@@ -6,7 +6,7 @@ import Container from "./Container";
 import { Heart, X } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { Product } from "../sanity/sanity.types";
+import { Product, Category } from "@/sanity.types";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
@@ -62,26 +62,27 @@ const WishListProducts = () => {
                           size={18}
                           className="hover:text-red-600 hover:cursor-pointer hoverEffect"
                         />
-                        {product?.images && (
-                          <Link
-                            href={`/product/${product?.slug?.current}`}
-                            className="border rounded-md group hidden md:inline-flex"
-                          >
-                            <Image
-                              src={urlFor(product?.images[0]).url()}
-                              alt={"product image"}
-                              width={80}
-                              height={80}
-                              className="rounded-md group-hover:scale-105 hoverEffect h-20 w-20 object-contain"
-                            />
-                          </Link>
-                        )}
+                        {product?.images?.[0] && (
+  <Link
+    href={`/product/${product.slug?.current}`}
+    className="border rounded-md group hidden md:inline-flex"
+  >
+    <Image
+      src={urlFor(product.images[0]).url()}
+      alt="product image"
+      width={80}
+      height={80}
+      className="rounded-md group-hover:scale-105 hoverEffect h-20 w-20 object-contain"
+    />
+  </Link>
+)}
+
                         <p className="line-clamp-1">{product?.name}</p>
                       </td>
                       <td className="p-2 capitalize hidden md:table-cell">
                         {product?.categories && (
                           <p className="uppercase line-clamp-1 text-xs font-medium">
-                            {product.categories.map((cat) => cat).join(", ")}
+                            {product.categories.map((cat: Category) => cat.title).join(", ")}
                           </p>
                         )}
                       </td>

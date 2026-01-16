@@ -11,8 +11,8 @@ interface PageProps {
 }
 
 const CategoryPage = async ({ params }: PageProps) => {
-  const categories = await getCategories();
-  const { slug } = params;
+  const { slug } = params; // destructure slug first
+  const categories = await getCategories(); // then fetch categories
 
   return (
     <div className="py-10">
@@ -30,3 +30,4 @@ const CategoryPage = async ({ params }: PageProps) => {
 };
 
 export default CategoryPage;
+

@@ -1,11 +1,11 @@
 import React from "react";
-import { BRANDS_QUERYResult } from "@sanity/types";
+import { Brand } from "@/sanity.types";
 import Title from "../Title";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 
 interface Props {
-  brands: BRANDS_QUERYResult;
+  brands: Brand[];
   selectedBrand?: string | null;
   setSelectedBrand: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -16,7 +16,7 @@ const BrandList = ({ brands, selectedBrand, setSelectedBrand }: Props) => {
       <Title className="text-base font-black mb-2">Brands</Title>
 
       <RadioGroup value={selectedBrand || ""} className="space-y-1">
-        {brands?.map((brand) => {
+        {brands?.map((brand: Brand) => {
           const slug = brand?.slug?.current ?? brand?._id;
           return (
             <div

@@ -14,11 +14,13 @@ const Footer = () => {
     <footer className="bg-white border-t">
       <Container>
         <FooterTop />
+
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Logo & Description */}
           <div className="space-y-4">
             <Logo />
             <SubText>
-              GRABB your fit. GRABB your moment. Because fashion isn't just worn — it's owned. 
+              GRABB your fit. GRABB your moment. Because fashion isn't just worn — it's owned.
             </SubText>
             <SocialMedia
               className="text-darkColor/60"
@@ -26,43 +28,50 @@ const Footer = () => {
               tooltipClassName="bg-darkColor text-white"
             />
           </div>
+
+          {/* Quick Links */}
           <div>
             <SubTitle>Quick Links</SubTitle>
-              <ul className="space-y-3 mt-4 text-gray-600 text-sm">
-              {quickLinksData?.map((item) => (
-                <li key={item?.title}>
-                  <Link
-                  href={item?.href}
-                  className="hover:text-shop_dark_yellow hoverEffect font-medium"
-                  >
-                    {item?.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="text-gray-600 text-sm">
+              <ul className="space-y-3 mt-4">
+                {quickLinksData?.map((item) => (
+                  <li key={item?.title}>
+                    <Link
+                      href={item?.href}
+                      className="hover:text-shop_dark_yellow hoverEffect font-medium"
+                    >
+                      {item?.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
+
+          {/* Categories */}
           <div>
             <SubTitle>Categories</SubTitle>
-            <SubText>
+            <div className="text-gray-600 text-sm">
               <ul className="space-y-3 mt-4">
-              {categoriesData?.map((item) => (
-                <li key={item?.title}>
-                  <Link
-                    href={`/category/${item?.value}`}
-                    className="hover:text-shop_dark_yellow hoverEffect font-medium"
-                  >
-                    {item?.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            </SubText>
+                {categoriesData?.map((item) => (
+                  <li key={item?.title}>
+                    <Link
+                      href={`/category/${item?.value}`}
+                      className="hover:text-shop_dark_yellow hoverEffect font-medium"
+                    >
+                      {item?.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
+
+          {/* Newsletter */}
           <div className="space-y-4">
             <SubTitle>Newsletter</SubTitle>
             <SubText>
-              Subscribe to our newsletter to receive updates and exclusive
-              offers.
+              Subscribe to our newsletter to receive updates and exclusive offers.
             </SubText>
             <form className="space-y-3">
               <Input placeholder="Enter your email" type="email" required />
@@ -70,10 +79,11 @@ const Footer = () => {
             </form>
           </div>
         </div>
+
+        {/* Footer Bottom */}
         <div className="py-6 border-t text-center text-sm text-gray-600">
           <div>
-            © {new Date().getFullYear()} <Logo className="text-sm" />. All
-            rights reserved.
+            © {new Date().getFullYear()} <Logo className="text-sm" />. All rights reserved.
           </div>
         </div>
       </Container>

@@ -1,53 +1,85 @@
 import { defineQuery } from "next-sanity";
 
 // ✅ Get all brands
-export const BRANDS_QUERY = defineQuery(`*[_type=='brand'] | order(name asc)`);
-
-// ✅ Get hot deal products
-export const DEAL_PRODUCTS = defineQuery(
-  `*[_type == 'product' && status == 'hot'] | order(name asc){
-    ...,
-    "categories": categories[]->title,
-    "status": status
-  }`
-);
-
-
-// ✅ Get product details by slug
-export const PRODUCT_BY_SLUG_QUERY = defineQuery(
-  `*[_type == "product" && slug.current == $slug][0]{
-    ...,
-    "id": _id,
+const BRANDS_QUERY = defineQuery(`
+  *[_type == "brand"] | order(name asc) {
+    _id,
+    name,
     "slug": slug.current,
-    "categories": categories[]->title,
-    "brand": brand->title,
-    images[],
+    "logo": logo.asset->url
+  }
+`);
+
+// ✅ Get hot deal products (status 'hot' or discount > 0)
+const DEAL_PRODUCTS = defineQuery(`
+  *[_type == "product" && (status == "hot" || discount > 0)] | order(discount desc) {
+    _id,
+    name,
+    "slug": slug.current,
     price,
     discount,
-    description,
+    "categories": categories[]->title,
+    "brand": brand->name,
+    "images": images[].asset->url,
+    status
+  }
+`);
+
+// ✅ Get product details by slug
+const PRODUCT_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "product" && slug.current == $slug][0] {
+    _id,
     name,
-    variant,
+    "slug": slug.current,
+    description,
+    price,
+    discount,
     stock,
     isFeatured,
-    status
-  }`
-);
+    status,
+    "categories": categories[]->title,
+    "brand": brand->name,
+    "images": images[].asset->url,
+    variant
+  }
+`);
 
-
-// ✅ Get brand info for a product by slug
-export const BRAND_QUERY = defineQuery(
-  `*[_type == "product" && slug.current == $slug]{
-    "brandName": brand->title
-  }`
-);
+// ✅ Get brand info by slug
+const BRAND_QUERY = defineQuery(`
+  *[_type == "brand" && slug.current == $slug][0] {
+    _id,
+    name,
+    "slug": slug.current,
+    "logo": logo.asset->url,
+    description
+  }
+`);
 
 // ✅ Get orders for logged-in Clerk user
-export const MY_ORDERS_QUERY = defineQuery(
-  `*[_type == 'order' && clerkUserId == $userId] | order(orderData desc){
-    ...,
-    products[]{
-      ...,
-      product->
+const MY_ORDERS_QUERY = defineQuery(`
+  *[_type == "order" && clerkUserId == $userId] | order(orderDate desc) {
+    _id,
+    orderDate,
+    status,
+    totalAmount,
+    products[] {
+      quantity,
+      product->{
+        _id,
+        name,
+        price,
+        "slug": slug.current,
+        "images": images[].asset->url
+      }
     }
-  }`
-);
+  }
+`);
+
+export {
+  BRANDS_QUERY,
+  DEAL_PRODUCTS,
+  PRODUCT_BY_SLUG_QUERY,
+  BRAND_QUERY,
+  MY_ORDERS_QUERY,
+};
+

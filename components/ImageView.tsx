@@ -1,22 +1,10 @@
 "use client";
 
-import { SanityImageCrop, SanityImageHotspot } from "../sanity/sanity.types";
+import { SanityImage } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import React, { useState } from "react";
-
-interface SanityImage {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-  };
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  _type: "image";
-  _key: string;
-}
+import React, { useEffect, useState } from "react";
 
 interface Props {
   images?: SanityImage[];
@@ -24,13 +12,21 @@ interface Props {
 }
 
 const ImageView = ({ images = [], isStock }: Props) => {
-  const [active, setActive] = useState<SanityImage>(images[0]);
+  const [active, setActive] = useState<SanityImage | null>(null);
+
+  useEffect(() => {
+    if (images.length > 0) {
+      setActive(images[0]);
+    }
+  }, [images]);
+
+  if (!active) return null;
 
   return (
     <div className="w-full md:w-1/2 space-y-2 md:space-y-4">
       <AnimatePresence mode="wait">
         <motion.div
-          key={active?._key}
+          key={active._key}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -56,7 +52,9 @@ const ImageView = ({ images = [], isStock }: Props) => {
             key={image._key}
             onClick={() => setActive(image)}
             className={`border rounded-md overflow-hidden ${
-              active._key === image._key ? "border-darkColor opacity-100" : "opacity-80"
+              active._key === image._key
+                ? "border-darkColor opacity-100"
+                : "opacity-80"
             }`}
           >
             <Image
@@ -74,3 +72,4 @@ const ImageView = ({ images = [], isStock }: Props) => {
 };
 
 export default ImageView;
+

@@ -1,97 +1,119 @@
+
+// sanity/queries/index.ts
 import { sanityFetch } from "../lib/live";
 import {
+
   BRAND_QUERY,
   BRANDS_QUERY,
   DEAL_PRODUCTS,
-  PRODUCT_BY_SLUG_QUERY,
+
   MY_ORDERS_QUERY,
+
+  PRODUCT_BY_SLUG_QUERY,
+
 } from "./queries";
 
-export const getCategories = async (quantity?: number) => {
-  try{
-      const query = quantity
-    ? `*[_type == 'category'] | order(name asc) [0...$quantity] {
-        ...,
-        "productCount": count(*[_type == "product" && references(^._id)])
-      }`
-    : `*[_type == 'category'] | order(name asc) {
-        ...,
-        "productCount": count(*[_type == "product" && references(^._id)])
-      }`;
+// ✅ Get all categories
+const getCategories = async (quantity?: number) => {
+  try {
+    const query = quantity
+      ? `*[_type == 'category'] | order(name asc) [0...$quantity] {
+          ...,
+          "productCount": count(*[_type == "product" && references(^._id)])
+        }`
+      : `*[_type == 'category'] | order(name asc) {
+          ...,
+          "productCount": count(*[_type == "product" && references(^._id)])
+        }`;
 
-  const { data } = await sanityFetch({
-    query,
-    params: quantity ? { quantity } : {},
-  });
+    const { data } = await sanityFetch({
+      query,
+      params: quantity ? { quantity } : {},
+    });
 
-  return data ;
-}
-catch (error) {
-    console.log("Error fetching categories", error);
+    return data ?? [];
+  } catch (error) {
+    console.error("Error fetching categories:", error);
     return [];
   }
 };
 
-export const getAllBrands = async () => {
+// ✅ Get all brands
+const getAllBrands = async () => {
   try {
     const { data } = await sanityFetch({ query: BRANDS_QUERY });
     return data ?? [];
   } catch (error) {
-    console.log("Error fetching all brands:", error);
+    console.error("Error fetching brands:", error);
     return [];
   }
 };
 
-export const getDealProducts = async () => {
+
+
+
+// ✅ Get hot deal products
+const getDealProducts = async () => {
   try {
     const { data } = await sanityFetch({ query: DEAL_PRODUCTS });
     return data ?? [];
   } catch (error) {
-    console.log("Error fetching deal Products:", error);
+    console.error("Error fetching deal products:", error);
     return [];
   }
 };
 
-export const getProductBySlug = async (slug: string) => {
+// ✅ Get product by slug
+const getProductBySlug = async (slug: string) => {
   try {
-    const product = await sanityFetch({
+    const { data } = await sanityFetch({
       query: PRODUCT_BY_SLUG_QUERY,
-      params: {
-        slug,
-      },
+      params: { slug },
     });
-    return product?.data || null;
+    return data || null;
   } catch (error) {
-    console.error("Error fetching product by ID:", error);
+    console.error("Error fetching product by slug:", error);
     return null;
   }
 };
 
-export const getBrand = async (slug: string) => {
+// ✅ Get brand info by product slug
+const getBrand = async (slug: string) => {
   try {
-    const product = await sanityFetch({
+    const { data } = await sanityFetch({
       query: BRAND_QUERY,
-      params: {
-        slug,
-      },
+      params: { slug },
     });
-    return product?.data || null;
+    return data || null;
   } catch (error) {
-    console.error("Error fetching product by ID:", error);
+    console.error("Error fetching brand:", error);
     return null;
   }
 };
 
-export 
+// ✅ Get orders for logged-in Clerk user
 const getMyOrders = async (userId: string) => {
   try {
-    const orders = await sanityFetch({
+    const { data } = await sanityFetch({
       query: MY_ORDERS_QUERY,
       params: { userId },
     });
-    return orders?.data || null;
+    return data || null;
   } catch (error) {
-    console.error("Error fetching product by ID:", error);
+    console.error("Error fetching orders:", error);
     return null;
   }
+};
+
+
+
+
+export {
+  getCategories,
+  getAllBrands,
+  getDealProducts,
+  getProductBySlug,
+  getBrand,
+  getMyOrders,
+
 };

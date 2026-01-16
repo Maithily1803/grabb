@@ -5,6 +5,7 @@ import { getAllBrands } from "@/sanity/queries";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { GitCompareArrows, Headset, ShieldCheck, Truck } from "lucide-react";
+import { SanityImage } from "@/sanity.types";
 
 // Temporarily define your own Brand type here
 type BrandWithSlug = {
@@ -13,12 +14,7 @@ type BrandWithSlug = {
   slug: {
     current: string;
   };
-  image?: {
-    asset: {
-      _ref: string;
-      _type: "reference";
-    };
-  };
+  image?: SanityImage;
 };
 
 
@@ -66,15 +62,16 @@ const ShopByBrands = async () => {
             href={{ pathname: "/shop", query: { brand: brand?.slug?.current } }}
             className="bg-white w-34 h-24 flex items-center justify-center rounded-md overflow-hidden hover:shadow-lg shadow-shop_dark_yellow/20 hoverEffect"
           >
-            {brand?.image && (
-              <Image
-                src={urlFor(brand?.image).url()}
-                alt="brandImage"
-                width={250}
-                height={250}
-                className="w-32 h-20 object-contain"
-              />
-            )}
+            {brand.image && (
+  <Image
+    src={urlFor(brand.image).url()}
+    alt="brandImage"
+    width={250}
+    height={250}
+    className="w-32 h-20 object-contain"
+  />
+)}
+
           </Link>
         ))}
       </div>

@@ -1,62 +1,76 @@
 "use client";
 
-import {
-  createRazorpayOrder,
-  Metadata,
-} from "@/actions/createRazorpayOrder";
+import { useEffect, useState } from "react";
+import { useAuth, useUser } from "@clerk/nextjs";
+import { Trash } from "lucide-react";
+import Image from "next/image";
+import toast from "react-hot-toast";
+
 import Container from "@/components/Container";
 import EmptyCart from "@/components/EmptyCart";
 import NoAccess from "@/components/NoAccess";
 import PriceFormatter from "@/components/PriceFormatter";
-import ProductSideMenu from "@/components/ProductSideMenu";
 import QuantityButtons from "@/components/QuantityButtons";
 import Title from "@/components/Title";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/components/ui/radio-group";
-import { Address } from "@/sanity/sanity.types";
-import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Separator } from "@/components/ui/separator";
+
 import useStore from "@/store";
-import { useAuth, useUser } from "@clerk/nextjs";
-import { Trash } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { Address } from "@/sanity.types";
+import { createRazorpayOrder, Metadata } from "@/actions/createRazorpayOrder";
+import { urlFor } from "@/sanity/lib/image";
 
 const CartPage = () => {
-  const {
-    deleteCartProduct,
-    resetCart,
-    getGroupedItems,
-  } = useStore();
-
+  const { deleteCartProduct, resetCart, getGroupedItems } = useStore();
   const groupedItems = getGroupedItems();
+
   const { isSignedIn } = useAuth();
   const { user } = useUser();
+
   const [addresses, setAddresses] = useState<Address[] | null>(null);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Mock addresses for development
   const fetchAddresses = async () => {
     setLoading(true);
     try {
-      const query = `*[_type=="address"] | order(publishedAt desc)`;
-      const data = await client.fetch(query);
+  const data: Address[] = [
+  {
+    _id: "addr1",
+    _type: "address",
+    name: "Home",
+    address: "123, MG Road",
+    city: "Mumbai",
+    state: "Maharashtra",
+    pin: "400001",
+    default: true,
+    _createdAt: new Date().toISOString(),
+    _updatedAt: new Date().toISOString(),
+  },
+  {
+    _id: "addr2",
+    _type: "address",
+    name: "Office",
+    address: "456, Business Street",
+    city: "Pune",
+    state: "Maharashtra",
+    pin: "411001",
+    default: false,
+    _createdAt: new Date().toISOString(),
+    _updatedAt: new Date().toISOString(),
+  },
+];
+
+
       setAddresses(data);
-      const defaultAddress = data.find((addr: Address) => addr.default);
-      setSelectedAddress(defaultAddress ?? data[0] ?? null);
-    } catch (error) {
-      console.error("Address fetch error:", error);
+      const defaultAddr = data.find((a) => a.default) ?? data[0] ?? null;
+      setSelectedAddress(defaultAddr);
+    } catch (err) {
+      console.error("Address fetch error:", err);
     } finally {
       setLoading(false);
     }
@@ -66,6 +80,18 @@ const CartPage = () => {
     fetchAddresses();
   }, []);
 
+  // Cart calculations
+  const getSubTotal = () =>
+    groupedItems.reduce((acc, item) => acc + (item.product.price ?? 0) * item.quantity, 0);
+
+  const getDiscount = () =>
+    groupedItems.reduce(
+      (acc, item) => acc + ((item.product.price ?? 0) * (item.product.discount ?? 0) / 100) * item.quantity,
+      0
+    );
+
+  const getTotal = () => getSubTotal() - getDiscount();
+
   const handleResetCart = () => {
     if (window.confirm("Are you sure you want to reset your cart?")) {
       resetCart();
@@ -73,24 +99,11 @@ const CartPage = () => {
     }
   };
 
-  const getSubTotal = () => {
-    return groupedItems.reduce((acc, item) => {
-      const price = item.product.price ?? 0;
-      return acc + price * item.quantity;
-    }, 0);
-  };
-
-  const getTotal = () => {
-    return groupedItems.reduce((acc, item) => {
-      const price = item.product.price ?? 0;
-      const discount = item.product.discount ?? 0;
-      const discountedPrice = price * (1 - discount / 100);
-      return acc + discountedPrice * item.quantity;
-    }, 0);
-  };
-
   const handleCheckout = async () => {
-    if (!selectedAddress || !user) return;
+    if (!selectedAddress || !user) {
+      toast.error("Please select an address and make sure you are signed in.");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -118,6 +131,7 @@ const CartPage = () => {
         window.location.href = result.redirectUrl;
       }
     } catch (err) {
+      console.error(err);
       toast.error("Checkout failed.");
     } finally {
       setLoading(false);
@@ -128,10 +142,14 @@ const CartPage = () => {
   if (!groupedItems || groupedItems.length === 0) return <EmptyCart />;
 
   return (
-    <div className="py-10">
+    <div className="py-10 bg-gray-50">
       <Container>
-        <Title>Shopping Cart</Title>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-10">
+        <div className="flex items-center gap-2 mb-5">
+          <Title>Shopping Cart</Title>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {/* Cart Items */}
           <div className="space-y-3 lg:col-span-2">
             {groupedItems.map((item) => {
               const price = item.product.price ?? 0;
@@ -170,7 +188,10 @@ const CartPage = () => {
                             )}
                           </div>
                           <Trash
-                            onClick={() => deleteCartProduct(item.product._id)}
+                            onClick={() => {
+                              deleteCartProduct(item.product._id);
+                              toast.success("Product deleted!");
+                            }}
                             className="cursor-pointer hover:text-red-500"
                           />
                         </div>
@@ -183,48 +204,55 @@ const CartPage = () => {
                 </Card>
               );
             })}
+
+            <Button onClick={handleResetCart} variant="destructive" className="mt-3">
+              Reset Cart
+            </Button>
           </div>
 
+          {/* Order Summary + Address */}
           <div className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Summary</CardTitle>
+                <CardTitle>Order Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
-                <p>Subtotal: <PriceFormatter amount={getSubTotal()} /></p>
-                <p>Tax: ₹0</p>
-                <p className="font-semibold">Total: <PriceFormatter amount={getTotal()} /></p>
+                <div className="flex justify-between">
+                  <span>Subtotal</span>
+                  <PriceFormatter amount={getSubTotal()} />
+                </div>
+                <div className="flex justify-between">
+                  <span>Discount</span>
+                  <PriceFormatter amount={getDiscount()} />
+                </div>
+                <Separator />
+                <div className="flex justify-between font-semibold">
+                  <span>Total</span>
+                  <PriceFormatter amount={getTotal()} />
+                </div>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Select Address</CardTitle>
+                <CardTitle>Delivery Address</CardTitle>
               </CardHeader>
               <CardContent>
                 {addresses && addresses.length > 0 ? (
-                  <RadioGroup
-                    value={selectedAddress?._id}
-                    onValueChange={(id) =>
-                      setSelectedAddress(addresses.find((a) => a._id === id) || null)
-                    }
-                  >
+                  <RadioGroup value={selectedAddress?._id}>
                     {addresses.map((address) => (
                       <div
                         key={address._id}
-                        className={`flex items-start gap-2 py-2 cursor-pointer ${
-                          selectedAddress?._id === address._id
-                            ? "text-shop_dark_green"
-                            : ""
+                        className={`flex items-center space-x-2 mb-4 cursor-pointer ${
+                          selectedAddress?._id === address._id ? "text-shop_dark_green" : ""
                         }`}
                         onClick={() => setSelectedAddress(address)}
                       >
-                        <RadioGroupItem value={address._id} />
+                        <RadioGroupItem value={address._id.toString()} />
                         <Label className="grid gap-1.5 flex-1">
                           <span className="font-semibold">{address.name}</span>
                           <span className="text-sm text-black/60">
-                            {address.address}, {address.city}, {address.state}{" "}
-                            {address.pin}
+                            {address.address}, {address.city}, {address.state} {address.pin}
                           </span>
                         </Label>
                       </div>
@@ -236,14 +264,14 @@ const CartPage = () => {
               </CardContent>
             </Card>
 
-            <div className="flex gap-3">
-              <Button onClick={handleResetCart} variant="outline">
-                Reset
-              </Button>
-              <Button onClick={handleCheckout} disabled={loading}>
-                {loading ? "Processing..." : "Checkout"}
-              </Button>
-            </div>
+            <Button
+              type="button"
+              onClick={handleCheckout}
+              disabled={loading || !selectedAddress || !user}
+              className="w-full"
+            >
+              {loading ? "Processing..." : "Checkout"}
+            </Button>
           </div>
         </div>
       </Container>
@@ -252,3 +280,4 @@ const CartPage = () => {
 };
 
 export default CartPage;
+

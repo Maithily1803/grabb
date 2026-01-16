@@ -1,5 +1,5 @@
 "use client";
-import { Brand, Category, Product } from "../sanity/sanity.types";
+import { Brand, Category, Product } from "@/sanity.types";
 import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import Title from "./Title";

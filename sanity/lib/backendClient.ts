@@ -1,10 +1,9 @@
-// sanity/lib/backendClient.ts
-import { createClient } from 'next-sanity'
+import { createClient } from "next-sanity";
 
 export const backendClient = createClient({
-  projectId: "yrmiiat0",
-  dataset: "production",
-  apiVersion: "2024-06-01",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  apiVersion: "2024-01-01",
   useCdn: false,
-  token: process.env.SANITY_API_TOKEN, // Optional if only reading
+  token: process.env.SANITY_API_TOKEN,
 });
