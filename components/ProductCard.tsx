@@ -1,3 +1,4 @@
+"use client";
 import { Product, Category } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";

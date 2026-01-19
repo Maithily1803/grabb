@@ -1,6 +1,6 @@
 
 
-export const banner_1 = "/placeholder-banner.png";
-export const emptyCart = "/placeholder-cart.png";
+export const banner_1 = "/banner_1.png";
+export const emptyCart = "/emptyCart.png";
 
 // Add more images as needed

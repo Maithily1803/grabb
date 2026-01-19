@@ -34,7 +34,6 @@ const CartPage = () => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Mock addresses for development
   const fetchAddresses = async () => {
     setLoading(true);
     try {
@@ -80,7 +79,7 @@ const CartPage = () => {
     fetchAddresses();
   }, []);
 
-  // Cart calculations
+
   const getSubTotal = () =>
     groupedItems.reduce((acc, item) => acc + (item.product.price ?? 0) * item.quantity, 0);
 
@@ -101,7 +100,7 @@ const CartPage = () => {
 
   const handleCheckout = async () => {
     if (!selectedAddress || !user) {
-      toast.error("Please select an address and make sure you are signed in.");
+      toast.error("Please select an address.");
       return;
     }
 
@@ -149,7 +148,7 @@ const CartPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          {/* Cart Items */}
+        
           <div className="space-y-3 lg:col-span-2">
             {groupedItems.map((item) => {
               const price = item.product.price ?? 0;
@@ -210,7 +209,6 @@ const CartPage = () => {
             </Button>
           </div>
 
-          {/* Order Summary + Address */}
           <div className="space-y-4">
             <Card>
               <CardHeader>
@@ -244,7 +242,7 @@ const CartPage = () => {
                       <div
                         key={address._id}
                         className={`flex items-center space-x-2 mb-4 cursor-pointer ${
-                          selectedAddress?._id === address._id ? "text-shop_dark_green" : ""
+                          selectedAddress?._id === address._id ? "text-shop_dark_yellow" : ""
                         }`}
                         onClick={() => setSelectedAddress(address)}
                       >
@@ -268,7 +266,7 @@ const CartPage = () => {
               type="button"
               onClick={handleCheckout}
               disabled={loading || !selectedAddress || !user}
-              className="w-full"
+              className="w-full bg-yellow-500 hover:bg-shop_dark_yellow/90"
             >
               {loading ? "Processing..." : "Checkout"}
             </Button>

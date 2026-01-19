@@ -13,14 +13,14 @@ export const headerData = [
     { title: "Help", href: "/help" },
   ];
   export const categoriesData = [
-  { title: "T-Shirts", value: "tshirts" },
+  { title: "T-Shirts", value: "t-shirts" }, 
   { title: "Shirts", value: "shirts" },
   { title: "Dresses", value: "dresses" },
   { title: "Shoes", value: "shoes" },
   { title: "Bags", value: "bags" },
   { title: "Watches", value: "watches" },
-  
 ];
+
 
 export const productType = [
   { title: "Men", value: "men" },

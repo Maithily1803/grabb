@@ -4,6 +4,8 @@ import Title from "@/components/Title";
 import { getCategories } from "@/sanity/queries";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: {
     slug: string;
@@ -11,23 +13,29 @@ interface PageProps {
 }
 
 const CategoryPage = async ({ params }: PageProps) => {
-  const { slug } = params; // destructure slug first
-  const categories = await getCategories(); // then fetch categories
+  const categories = await getCategories();
 
   return (
     <div className="py-10">
       <Container>
         <Title>
           Products by Category:{" "}
-          <span className="font-bold text-shop_dark_yellow capitalize tracking-wide">
-            {slug}
+          <span className="font-bold text-shop_dark_yellow capitalize">
+            {params.slug}
           </span>
         </Title>
-        <CategoryProducts categories={categories} slug={slug} />
+
+        {/* 🔥 KEY IS THE FIX */}
+        <CategoryProducts
+          key={params.slug}
+          categories={categories}
+          slug={params.slug}
+        />
       </Container>
     </div>
   );
 };
 
 export default CategoryPage;
+
 

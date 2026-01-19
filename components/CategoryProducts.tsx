@@ -1,14 +1,12 @@
 "use client";
 
 import { Category, Product } from "@/sanity.types";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import { client } from "@/sanity/lib/client";
-import { AnimatePresence, motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
-import NoProductAvailable from "./NoProductAvailable";
 import ProductCard from "./ProductCard";
+import NoProductAvailable from "./NoProductAvailable";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
   categories: Category[];
@@ -16,88 +14,85 @@ interface Props {
 }
 
 const CategoryProducts = ({ categories, slug }: Props) => {
-  const [currentSlug, setCurrentSlug] = useState(slug);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-
-  const handleCategoryChange = (newSlug: string) => {
-    if (newSlug === currentSlug) return;
-    setCurrentSlug(newSlug);
-    router.push(`/category/${newSlug}`, { scroll: false });
-  };
-
-  const fetchProducts = async (categorySlug: string) => {
-    setLoading(true);
-    try {
-      const query = `
-        *[_type == 'product' && references(*[_type == "category" && slug.current == $categorySlug]._id)] | order(name asc){
-          ...,
-          "categories": categories[]->title
-        }
-      `;
-      const data = await client.fetch(query, { categorySlug });
-      setProducts(data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProducts(currentSlug);
-  }, [router]);
+    const fetchProducts = async () => {
+      setLoading(true);
+      setProducts([]);
+
+      try {
+        const query = `
+          *[
+            _type == "product" &&
+            $slug in categories[]->slug.current
+          ] | order(name asc)
+        `;
+
+        const data = await client.fetch<Product[]>(query, { slug });
+        setProducts(data);
+      } catch (error) {
+        console.error("Category product fetch error:", error);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [slug]);
 
   return (
-    <div className="py-5 flex flex-col md:flex-row items-start gap-5">
-      <div className="flex flex-col md:min-w-40 border">
-        {categories?.map((item) => {
-          const isActive = item?.slug?.current === currentSlug;
-          return (
-            <Button
-              key={item?._id}
-              onClick={() => handleCategoryChange(item?.slug?.current as string)}
-              className={`bg-transparent border-0 p-0 rounded-none shadow-none border-b last:border-b-0 transition-colors capitalize text-left w-full px-2 ${
-                isActive
-                  ? "bg-shop_rose text-white font-bold border-shop_rose"
-                  : "text-darkColor hover:bg-shop_rose hover:text-white"
-              }`}
-            >
-              {item?.title}
-            </Button>
-          );
-        })}
-      </div>
+    <div className="py-10 flex flex-col md:flex-row gap-8">
+      {/* Category Sidebar */}
+      <aside className="w-full md:w-56">
+        <div className="rounded-xl border bg-white overflow-hidden">
+          {categories.map((cat) => {
+            const isActive = cat.slug?.current === slug;
 
-      <div className="flex-1">
+            return (
+              <Link
+                key={cat._id}
+                href={`/category/${cat.slug?.current}`}
+                className={`
+                  block px-4 py-3 text-sm transition-colors
+                  ${
+                    isActive
+                      ? "bg-shop_dark_yellow/10 text-shop_dark_yellow font-semibold"
+                      : "text-darkColor hover:bg-gray-50"
+                  }
+                `}
+              >
+                {cat.title}
+              </Link>
+            );
+          })}
+        </div>
+      </aside>
+
+      {/* Products Grid */}
+      <section className="flex-1">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-10 min-h-80 space-y-4 text-center bg-gray-100 rounded-lg w-full">
-            <div className="flex items-center space-x-2 text-blue-600">
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Product is loading...</span>
-            </div>
+          <div className="min-h-[300px] flex items-center justify-center">
+            <Loader2 className="w-6 h-6 animate-spin text-shop_dark_yellow" />
           </div>
-        ) : products?.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5">
-            {products?.map((product: Product) => (
-              <AnimatePresence key={product._id}>
-                <motion.div>
-                  <ProductCard product={product} />
-                </motion.div>
-              </AnimatePresence>
+        ) : products.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {products.map((product) => (
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         ) : (
-          <NoProductAvailable
-            selectedTab={currentSlug}
-            className="mt-0 w-full"
-          />
+          <NoProductAvailable selectedTab={slug} />
         )}
-      </div>
+      </section>
     </div>
   );
 };
 
 export default CategoryProducts;
+
+
+
+
