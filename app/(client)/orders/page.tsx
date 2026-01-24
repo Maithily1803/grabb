@@ -13,8 +13,9 @@ import React from "react";
 
 const OrdersPage = async () => {
   const { userId } = await auth();
+
   if (!userId) {
-    return redirect("/");
+    redirect("/");
   }
 
   const orders = await getMyOrders(userId);
@@ -50,6 +51,7 @@ const OrdersPage = async () => {
                       <TableHead className="text-center">Action</TableHead>
                     </TableRow>
                   </TableHeader>
+
                   <OrdersComponent orders={orders} />
                 </Table>
                 <ScrollBar orientation="horizontal" />
@@ -66,7 +68,11 @@ const OrdersPage = async () => {
               It looks like you haven&apos;t placed any orders yet. Start
               shopping to see your orders here!
             </p>
-            <Button asChild className="mt-6">
+
+            <Button
+              asChild
+              className="mt-6 bg-shop_dark_yellow hover:bg-shop_dark_yellow/90 text-white font-semibold"
+            >
               <Link href="/">Browse Products</Link>
             </Button>
           </div>
@@ -77,3 +83,4 @@ const OrdersPage = async () => {
 };
 
 export default OrdersPage;
+

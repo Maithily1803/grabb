@@ -63,26 +63,32 @@ const WishListProducts = () => {
                           className="hover:text-red-600 hover:cursor-pointer hoverEffect"
                         />
                         {product?.images?.[0] && (
-  <Link
-    href={`/product/${product.slug?.current}`}
-    className="border rounded-md group hidden md:inline-flex"
-  >
-    <Image
-      src={urlFor(product.images[0]).url()}
-      alt="product image"
-      width={80}
-      height={80}
-      className="rounded-md group-hover:scale-105 hoverEffect h-20 w-20 object-contain"
-    />
-  </Link>
-)}
-
-                        <p className="line-clamp-1">{product?.name}</p>
+                          <Link
+                            href={`/product/${product.slug?.current}`}
+                            className="border rounded-md group hidden md:inline-flex"
+                          >
+                            <Image
+                              src={urlFor(product.images[0]).url()}
+                              alt="product image"
+                              width={80}
+                              height={80}
+                              className="rounded-md group-hover:scale-105 hoverEffect h-20 w-20 object-contain"
+                            />
+                          </Link>
+                        )}
+                        <Link
+                          href={`/product/${product.slug?.current}`}
+                          className="line-clamp-1 hover:text-shop_dark_yellow transition-colors"
+                        >
+                          {product?.name}
+                        </Link>
                       </td>
                       <td className="p-2 capitalize hidden md:table-cell">
                         {product?.categories && (
                           <p className="uppercase line-clamp-1 text-xs font-medium">
-                            {product.categories.map((cat: Category) => cat.title).join(", ")}
+                            {product.categories
+                              .map((cat: Category) => cat.title)
+                              .join(", ")}
                           </p>
                         )}
                       </td>
@@ -158,7 +164,10 @@ const WishListProducts = () => {
               Items added to your wishlist will appear here
             </p>
           </div>
-          <Button asChild>
+          <Button
+                        asChild
+                        className="mt-6 bg-shop_dark_yellow hover:bg-shop_dark_yellow/90 text-white font-semibold"
+                      >
             <Link href="/shop">Continue Shopping</Link>
           </Button>
         </div>
