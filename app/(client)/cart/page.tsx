@@ -40,12 +40,29 @@ interface RazorpayOptions {
   prefill: {
     name: string;
     email: string;
+    contact?: string;
   };
   theme: {
     color: string;
   };
   modal: {
     ondismiss: () => void;
+  };
+  config?: {
+    display: {
+      blocks: {
+        banks: {
+          name: string;
+          instruments: Array<{
+            method: string;
+          }>;
+        };
+      };
+      sequence: string[];
+      preferences: {
+        show_default_blocks: boolean;
+      };
+    };
   };
 }
 
@@ -183,7 +200,7 @@ const CartPage = () => {
       };
 
       const result = await createRazorpayOrder({
-        amount: getTotal() * 100, 
+        amount: getTotal() * 100,
         items: groupedItems.map((item) => ({
           productId: item.product._id,
           quantity: item.quantity,
@@ -198,7 +215,8 @@ const CartPage = () => {
         return;
       }
 
-      const options = {
+      // 🔥 RAZORPAY OPTIONS WITH RESTRICTED PAYMENT METHODS
+      const options: RazorpayOptions = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: result.amount,
         currency: result.currency,
@@ -207,7 +225,6 @@ const CartPage = () => {
         order_id: result.id,
         handler: async function (response: RazorpayResponse) {
           try {
-      
             const verification = await verifyRazorpayPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
@@ -231,6 +248,7 @@ const CartPage = () => {
         prefill: {
           name: user.fullName ?? "",
           email: user.emailAddresses[0]?.emailAddress ?? "",
+          contact: user.phoneNumbers?.[0]?.phoneNumber ?? "",
         },
         theme: {
           color: "#f0b100",
@@ -239,6 +257,28 @@ const CartPage = () => {
           ondismiss: function () {
             setLoading(false);
             toast.error("Payment cancelled");
+          },
+        },
+        // 🎯 THIS RESTRICTS TO UPI AND CARD ONLY
+        config: {
+          display: {
+            blocks: {
+              banks: {
+                name: "Pay using UPI or Card",
+                instruments: [
+                  {
+                    method: "upi",
+                  },
+                  {
+                    method: "card",
+                  },
+                ],
+              },
+            },
+            sequence: ["block.banks"],
+            preferences: {
+              show_default_blocks: false, // Hide default payment options
+            },
           },
         },
       };

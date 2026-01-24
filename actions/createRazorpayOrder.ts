@@ -24,7 +24,13 @@ export async function createRazorpayOrder(data: {
     }
 
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+      console.error("Razorpay credentials missing");
       return { error: "Payment gateway not configured" };
+    }
+
+    if (!process.env.SANITY_API_WRITE_TOKEN) {
+      console.error("Sanity write token missing");
+      return { error: "Database configuration error" };
     }
 
     const shortReceipt = data.metadata?.orderNumber
@@ -44,7 +50,7 @@ export async function createRazorpayOrder(data: {
       body: JSON.stringify({
         amount: Math.round(data.amount),
         currency: "INR",
-        receipt: `rcpt_${shortReceipt}`, 
+        receipt: `rcpt_${shortReceipt}`,
         notes: {
           items: JSON.stringify(data.items),
           userId: data.userId || "",
@@ -62,27 +68,32 @@ export async function createRazorpayOrder(data: {
     const order = await razorpayOrder.json();
 
     if (data.metadata) {
-      await backendClient.create({
-        _type: "order",
-        orderNumber: data.metadata.orderNumber,
-        razorpayOrderId: order.id,
-        orderDate: new Date().toISOString(),
-        customerName: data.metadata.customerName,
-        email: data.metadata.customerEmail,
-        clerkUserId: data.metadata.clerkUserId,
-        totalPrice: data.amount / 100,
-        status: "pending",
-        products: data.items.map((item) => ({
-          _type: "orderProduct",
-          _key: item.productId,
-          product: {
-            _type: "reference",
-            _ref: item.productId,
-          },
-          quantity: item.quantity,
-        })),
-        address: data.metadata.address,
-      });
+      try {
+        await backendClient.create({
+          _type: "order",
+          orderNumber: data.metadata.orderNumber,
+          razorpayOrderId: order.id,
+          orderDate: new Date().toISOString(),
+          customerName: data.metadata.customerName,
+          email: data.metadata.customerEmail,
+          clerkUserId: data.metadata.clerkUserId,
+          totalPrice: data.amount / 100,
+          status: "pending",
+          products: data.items.map((item) => ({
+            _type: "orderProduct",
+            _key: crypto.randomUUID(),
+            product: {
+              _type: "reference",
+              _ref: item.productId,
+            },
+            quantity: item.quantity,
+          })),
+          address: data.metadata.address,
+        });
+      } catch (sanityError: any) {
+        console.error("Sanity order creation failed:", sanityError);
+        console.error("Error details:", sanityError.message);
+      }
     }
 
     return {
@@ -92,9 +103,10 @@ export async function createRazorpayOrder(data: {
       status: order.status,
       orderNumber: data.metadata?.orderNumber,
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Order creation error:", error);
-    return { error: "Failed to create order." };
+    console.error("Error message:", error.message);
+    return { error: "Failed to create order. Please try again." };
   }
 }
 
@@ -155,8 +167,9 @@ export async function verifyRazorpayPayment(data: {
     }
 
     return { success: false, error: "Invalid payment signature" };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Payment verification error:", error);
     return { success: false, error: "Verification failed" };
   }
 }
+

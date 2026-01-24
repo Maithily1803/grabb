@@ -20,7 +20,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Logo />
             <SubText>
-              GRABB your fit. GRABB your moment. Because fashion isn't just worn — it's owned.
+             GRABB your fit. GRABB your moment. Because fashion isn&apos;t just worn — it&apos;s owned.
             </SubText>
             <SocialMedia
               className="text-darkColor/60"

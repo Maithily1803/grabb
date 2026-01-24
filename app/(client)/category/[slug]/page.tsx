@@ -7,12 +7,13 @@ import React from "react";
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 const CategoryPage = async ({ params }: PageProps) => {
+  const { slug } = await params;
   const categories = await getCategories();
 
   return (
@@ -21,15 +22,14 @@ const CategoryPage = async ({ params }: PageProps) => {
         <Title>
           Products by Category:{" "}
           <span className="font-bold text-shop_dark_yellow capitalize">
-            {params.slug}
+            {slug}
           </span>
         </Title>
 
-        {/* 🔥 KEY IS THE FIX */}
         <CategoryProducts
-          key={params.slug}
+          key={slug}
           categories={categories}
-          slug={params.slug}
+          slug={slug}
         />
       </Container>
     </div>
@@ -37,5 +37,6 @@ const CategoryPage = async ({ params }: PageProps) => {
 };
 
 export default CategoryPage;
+
 
 

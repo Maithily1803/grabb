@@ -39,9 +39,8 @@ const SuccessPageContent = () => {
 
         <div className="space-y-4 mb-4 text-left">
           <p className="text-gray-700">
-            Thank you for your purchase. We're processing your order and
-            will ship it soon. A confirmation email with your order details will
-            be sent to your inbox shortly.
+            Thank you for your purchase. We are processing your order and
+            will ship it soon.
           </p>
           <p className="text-gray-700">
             Order Number:{" "}

@@ -1,3 +1,5 @@
+"use client";
+
 import Container from "./Container";
 
 const PageShell = ({
@@ -11,7 +13,7 @@ const PageShell = ({
 }) => {
   return (
     <div className="relative overflow-hidden bg-white">
-
+      {/* Background decorations */}
       <div className="pointer-events-none absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-shop_dark_yellow/30 blur-[140px]" />
       <div className="pointer-events-none absolute top-1/3 -left-52 h-[620px] w-[620px] rounded-full bg-shop_dark_yellow/15 blur-[160px]" />
 

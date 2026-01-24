@@ -1,11 +1,9 @@
-import { defineArrayMember, defineField, defineType } from "sanity"
-import { BasketIcon } from "@sanity/icons"
+import { defineField, defineType } from "sanity";
 
 export const orderType = defineType({
   name: "order",
   title: "Order",
   type: "document",
-  icon: BasketIcon,
   fields: [
     defineField({
       name: "orderNumber",
@@ -17,18 +15,16 @@ export const orderType = defineType({
       name: "razorpayOrderId",
       title: "Razorpay Order ID",
       type: "string",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "razorpayPaymentId",
       title: "Razorpay Payment ID",
       type: "string",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "clerkUserId",
-      title: "User ID (Clerk)",
-      type: "string",
+      name: "orderDate",
+      title: "Order Date",
+      type: "datetime",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -39,118 +35,111 @@ export const orderType = defineType({
     }),
     defineField({
       name: "email",
-      title: "Customer Email",
+      title: "Email",
       type: "string",
       validation: (Rule) => Rule.required().email(),
     }),
     defineField({
-      name: "products",
-      title: "Products",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "object",
-          fields: [
-            defineField({
-              name: "product",
-              title: "Product",
-              type: "reference",
-              to: [{ type: "product" }],
-            }),
-            defineField({
-              name: "quantity",
-              title: "Quantity",
-              type: "number",
-              validation: (Rule) => Rule.min(1),
-            }),
-          ],
-          preview: {
-            select: {
-              title: "product.name",
-              quantity: "quantity",
-              media: "product.image",
-            },
-            prepare({ title, quantity, media }) {
-              return {
-                title: `${title} × ${quantity}`,
-                media,
-              }
-            },
-          },
-        }),
-      ],
+      name: "clerkUserId",
+      title: "Clerk User ID",
+      type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "totalPrice",
       title: "Total Price",
       type: "number",
-      validation: (Rule) => Rule.required().min(0),
-    }),
-    defineField({
-      name: "currency",
-      title: "Currency",
-      type: "string",
-      initialValue: "INR",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().positive(),
     }),
     defineField({
       name: "amountDiscount",
-      title: "Discount Applied",
+      title: "Amount Discount",
       type: "number",
-      initialValue: 0,
-    }),
-    defineField({
-      name: "address",
-      title: "Shipping Address",
-      type: "object",
-      fields: [
-        defineField({ name: "name", title: "Full Name", type: "string" }),
-        defineField({ name: "address", title: "Street Address", type: "string" }),
-        defineField({ name: "city", title: "City", type: "string" }),
-        defineField({ name: "state", title: "State", type: "string" }),
-        defineField({ name: "pin", title: "PIN Code", type: "string" }),
-      ],
     }),
     defineField({
       name: "status",
-      title: "Order Status",
+      title: "Status",
       type: "string",
       options: {
         list: [
           { title: "Pending", value: "pending" },
-          { title: "Processing", value: "processing" },
           { title: "Paid", value: "paid" },
-          { title: "Shipped", value: "shipped" },
-          { title: "Out for Delivery", value: "out_for_delivery" },
-          { title: "Delivered", value: "delivered" },
+          { title: "Failed", value: "failed" },
           { title: "Cancelled", value: "cancelled" },
         ],
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "orderDate",
-      title: "Order Date",
-      type: "datetime",
-      validation: (Rule) => Rule.required(),
+      name: "products",
+      title: "Products",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            {
+              name: "product",
+              title: "Product",
+              type: "reference",
+              to: [{ type: "product" }],
+            },
+            {
+              name: "quantity",
+              title: "Quantity",
+              type: "number",
+              validation: (Rule) => Rule.required().positive(),
+            },
+          ],
+          preview: {
+            select: {
+              title: "product.name",
+              quantity: "quantity",
+            },
+            prepare({ title, quantity }) {
+              return {
+                title: `${title} (x${quantity})`,
+              };
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: "address",
+      title: "Delivery Address",
+      type: "object",
+      fields: [
+        { name: "name", type: "string", title: "Address Name" },
+        { name: "address", type: "string", title: "Street Address" },
+        { name: "city", type: "string", title: "City" },
+        { name: "state", type: "string", title: "State" },
+        { name: "pin", type: "string", title: "PIN Code" },
+      ],
+    }),
+    defineField({
+      name: "invoice",
+      title: "Invoice",
+      type: "object",
+      fields: [
+        { name: "number", type: "string", title: "Invoice Number" },
+        { name: "hosted_invoice_url", type: "url", title: "Invoice URL" },
+      ],
     }),
   ],
   preview: {
     select: {
-      name: "customerName",
-      email: "email",
-      orderId: "orderNumber",
-      amount: "totalPrice",
-      currency: "currency",
+      title: "orderNumber",
+      customerName: "customerName",
+      status: "status",
+      totalPrice: "totalPrice",
     },
-    prepare({ name, orderId, email, amount, currency }) {
-      const shortId = orderId?.slice(0, 5) + "..." + orderId?.slice(-4)
+    prepare({ title, customerName, status, totalPrice }) {
       return {
-        title: `${name} (${shortId})`,
-        subtitle: `${amount} ${currency} • ${email}`,
-        media: BasketIcon,
-      }
+        title: `Order: ${title}`,
+        subtitle: `${customerName} - ₹${totalPrice} - ${status}`,
+      };
     },
   },
-})
+});
 
