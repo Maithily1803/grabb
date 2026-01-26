@@ -1,6 +1,7 @@
 # [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Macondo+Swash+Caps&size=50&pause=3000&color=FEF4AF&width=500&height=100&lines=GRABB+-+ECom+Store)](https://git.io/typing-svg)
 
-### **`GRABB your fit. GRABB your moment. Because fashion isn't just worn - it's owned.`**
+### **`GRABB your fit. GRABB your moment.`**
+### **`Because fashion isn't just worn - it's owned.`**
 
 ---
 
