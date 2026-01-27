@@ -7,7 +7,7 @@
 
 ## 🧩 Homepage 
 <p align="center">
-  <img src="assets/homepage.gif" width="900" alt="homepage Overview" />
+  <img src="assets/home.gif" width="900" alt="homepage Overview" />
 </p>
 
 ## 🎬 Product Tour
@@ -23,7 +23,7 @@
   <summary><strong> Searching a product </strong></summary>
   <br/>
   <p align="center">
-    <img src="assets/searchbar.gif" width="800" />
+    <img src="assets/search.gif" width="800" />
   </p>
 </details>
 
@@ -39,7 +39,7 @@
   <summary><strong> Product filtering </strong></summary>
   <br/>
   <p align="center">
-    <img src="assets/meeting.gif" width="800" />
+    <img src="assets/filter.gif" width="800" />
   </p>
 </details>
 
@@ -110,7 +110,7 @@
   <summary><strong> Architecture </strong></summary>
   <br/>
   <p align="center">
-    <img src="assets/architecture1.png" alt="System Architecture Diagram" width="100%" />
+    <img src="assets/architecture.png" alt="System Architecture Diagram" width="100%" />
   </p>
 </details>
 
@@ -118,7 +118,7 @@
   <summary><strong> Workflow </strong></summary>
   <br/>
   <p align="center">
-    <img src="assets/flow.png" alt="Processing Workflow Diagram" width="100%" />
+    <img src="assets/workflow.png" alt="Processing Workflow Diagram" width="100%" />
   </p>
 </details>
 
