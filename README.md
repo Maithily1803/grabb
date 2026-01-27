@@ -110,7 +110,7 @@
   <summary><strong> Architecture </strong></summary>
   <br/>
   <p align="center">
-    <img src="assets/architecture.png" alt="System Architecture Diagram" width="100%" />
+    <img src="assets/workflow.png" alt="System Architecture Diagram" width="100%" />
   </p>
 </details>
 
@@ -118,7 +118,7 @@
   <summary><strong> Workflow </strong></summary>
   <br/>
   <p align="center">
-    <img src="assets/workflow.png" alt="Processing Workflow Diagram" width="100%" />
+    <img src="assets/architecture.png" alt="Processing Workflow Diagram" width="100%" />
   </p>
 </details>
 
